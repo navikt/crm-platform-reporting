@@ -13,6 +13,7 @@
     "sourceApiVersion": "47.0",
     "packageAliases": {
         "crm-platform-reporting": "0Ho2o0000008OSfCAM",
-        "crm-platform-reporting@0.1.0-2": "04t2o000001MxZeAAK"
+        "crm-platform-reporting@0.1.0-2": "04t2o000001MxZeAAK",
+        "crm-platform-reporting@0.2.0-1": "04t2o000001MxZoAAK"
     }
 }
