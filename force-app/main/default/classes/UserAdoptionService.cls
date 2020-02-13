@@ -1,31 +1,21 @@
 public with sharing class UserAdoptionService {
 
-    public static void insertReportingDataLastDay() {
-        Date yesterday = Date.today().addDays(-1);
-        Time startTime = Time.newInstance(0, 0, 0, 0);
-        Time endTime = Time.newInstance(23, 59, 59, 59);
+    public static void insertReportingDataLastWeek() {
+
+        DateTime periodStart =DateTime.now().addDays(-7);
 
 
-
-        DateTime periodStart = Datetime.newInstance(yesterday, startTime);
-        DateTime periodEnd = Datetime.newInstance(yesterday, endTime);
-
-        if(Test.isRunningTest()){
-            //scratch org will not necessarily have logins the day before
-            periodEnd=Datetime.now();
-        }
-
-        List<ReportingData__c> reportingData = getLastLogInByRegion(periodStart, periodEnd);
+        List<ReportingData__c> reportingData = getLastLogInByRegion(periodStart);
         insert reportingData;
     }
 
     @TestVisible
-    private static List<ReportingData__c> getLastLogInByRegion(DateTime periodStart, DateTime periodEnd) {
+    private static List<ReportingData__c> getLastLogInByRegion(DateTime periodStart) {
 
         AggregateResult[] usersByRegion = [
                 SELECT Region__c, COUNT(ID) Logins
                 FROM User
-                WHERE LastLoginDate >= :periodStart AND LastLoginDate <= :periodEnd
+                WHERE LastLoginDate >= :periodStart
                 GROUP BY Region__c
         ];
 
@@ -35,7 +25,7 @@ public with sharing class UserAdoptionService {
                     Name = 'Pålogging',
                     CRM_Region__c = (String) ar.get('Region__c'),
                     CRM_Value__c = (Integer) ar.get('Logins'),
-                    CRM_Date__c = periodStart.date(),
+                    CRM_Date__c =Date.today().addDays(-1),
                     CRM_Category__c = 'User Adoption'
             ));
         }

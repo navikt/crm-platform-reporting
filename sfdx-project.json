@@ -3,22 +3,16 @@
         {
             "path": "force-app",
             "default": true,
-            "package": "crm-platform-base",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT"
-        },
-        {
-            "path": "force-app",
             "package": "crm-platform-reporting",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT",
-            "default": false
+            "versionName": "ver 0.2",
+            "versionNumber": "0.2.0.NEXT"
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "47.0",
     "packageAliases": {
-        "crm-platform-reporting": "0Ho2o0000008OSfCAM"
+        "crm-platform-reporting": "0Ho2o0000008OSfCAM",
+        "crm-platform-reporting@0.1.0-2": "04t2o000001MxZeAAK"
     }
 }
