@@ -16,6 +16,11 @@
                 <default>false</default>
                 <label>User Adoption</label>
             </value>
+            <value>
+                <fullName>New Users</fullName>
+                <default>false</default>
+                <label>New Users</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

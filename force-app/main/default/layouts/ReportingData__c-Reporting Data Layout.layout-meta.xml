@@ -12,7 +12,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NavUnit__c</field>
+                <field>CRM_NavUnit__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
