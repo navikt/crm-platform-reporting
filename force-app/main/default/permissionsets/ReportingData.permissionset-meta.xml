@@ -35,6 +35,11 @@
         <field>ReportingData__c.CRM_Value__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.CRM_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.CRM_Unit__c</field>
