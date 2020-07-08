@@ -21,6 +21,11 @@
                 <default>false</default>
                 <label>New Users</label>
             </value>
+            <value>
+                <fullName>Service Appointment</fullName>
+                <default>false</default>
+                <label>Service Appointment</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

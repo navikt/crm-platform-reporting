@@ -3,31 +3,49 @@
   "edition": "Enterprise",
   "adminEmail": "fakeemail@nav.no.scratchorg",
   "features": [
-    "Sites",
-    "ForceComPlatform",
-    "Communities",
-    "CustomerCommunity",
-    "CustomerCommunityPlus",
-    "PersonAccounts",
-    "ProcessBuilder",
-    "API",
-    "ServiceCloud",
-    "LiveAgent",
-    "LightningServiceConsole",
-    "ContactsToMultipleAccounts",
-    "FIELDSERVICE"
+		"Sites",
+		"ForceComPlatform",
+		"Communities",
+		"CustomerCommunity",
+		"CustomerCommunityLogin",
+		"CustomerCommunityPlus",
+		"CustomerCommunityPlusLogin",
+		"PersonAccounts",
+		"ProcessBuilder",
+		"API",
+		"ServiceCloud",
+		"LiveAgent",
+		"LightningServiceConsole",
+		"ContactsToMultipleAccounts",
+		"FieldService"
   ],
   "country": "NO",
   "language": "en_US",
   "settings": {
-    "communitiesSettings": {
-      "enableNetworksEnabled": true
-    },
-    "lightningExperienceSettings": {
-      "enableS1DesktopEnabled": true
-    },
-    "languageSettings": {
-      "enableTranslationWorkbench": true
-    }
+		"experienceBundleSettings": {
+			"enableExperienceBundleMetadata": true
+		},
+		"communitiesSettings": {
+			"enableNetworksEnabled": true,
+			"enableOotbProfExtUserOpsEnable": true
+		},
+		"lightningExperienceSettings": {
+			"enableS1DesktopEnabled": true
+		},
+		"languageSettings": {
+			"enableTranslationWorkbench": true
+		},
+		"fieldServiceSettings": {
+			"fieldServiceOrgPref": true,
+			"doesShareSaParentWoWithAr": false,
+			"doesShareSaWithAr": false,
+			"enableWorkOrders": true,
+			"isGeoCodeSyncEnabled": false,
+			"isLocationHistoryEnabled": false,
+			"fieldServiceNotificationsOrgPref": true
+		},
+		"nameSettings": {
+			"enableMiddleName": true
+		}
   }
 }
