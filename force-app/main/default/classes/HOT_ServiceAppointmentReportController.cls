@@ -72,6 +72,10 @@ public with sharing class HOT_ServiceAppointmentReportController {
         repData.HOT_SchedEndTime__c = serviceAppointment.SchedEndTime;
         repData.HOT_ActualStartTime__c = serviceAppointment.ActualStartTime;
         repData.HOT_ActualEndTime__c = serviceAppointment.ActualEndTime;
+        repData.HOT_RequestCreatedDate__c = request.CreatedDate;
+        repData.HOT_RequestName__c = request.Name;
+        repData.HOT_RequestSubject__c = request.Subject__c;
+        repData.HOT_ServiceAppointmentCreatedDate__c = serviceAppointment.CreatedDate;
         return repData;
     }
 
