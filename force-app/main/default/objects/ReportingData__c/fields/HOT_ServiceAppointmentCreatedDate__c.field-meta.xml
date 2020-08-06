@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HOT_IsAcute__c</fullName>
-    <defaultValue>false</defaultValue>
+    <fullName>HOT_ServiceAppointmentCreatedDate__c</fullName>
     <externalId>false</externalId>
-    <label>Request: Acute</label>
+    <label>SA: Created Date</label>
+    <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Checkbox</type>
+    <type>DateTime</type>
 </CustomField>
