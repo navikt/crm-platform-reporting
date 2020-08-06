@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HOT_RequestName__c</fullName>
     <externalId>false</externalId>
-    <label>Request Name</label>
+    <label>Request: Name</label>
     <length>80</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

@@ -3,7 +3,7 @@
     <fullName>HOT_IsAcute__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Acute</label>
+    <label>Request: Acute</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

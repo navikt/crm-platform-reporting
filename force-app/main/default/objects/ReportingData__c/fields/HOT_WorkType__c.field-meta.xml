@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HOT_WorkType__c</fullName>
     <externalId>false</externalId>
-    <label>Work Type</label>
+    <label>SA: Work Type</label>
     <length>80</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
