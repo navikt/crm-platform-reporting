@@ -3,7 +3,8 @@ public with sharing class HOT_ServiceAppointmentReportController {
 
     public static void upsertReportingData(Date periodStart, Date periodEnd) {
         List<ServiceAppointment> serviceAppointments = [SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
-                                                               EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime
+                                                               EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime,
+                                                               CreatedDate
                                                         FROM ServiceAppointment WHERE LastModifiedDate >= :periodStart AND LastModifiedDate <= :periodEnd];
         
         Map<Id, ServiceAppointment> IdtoSA = new Map<Id, ServiceAppointment>();
@@ -25,7 +26,7 @@ public with sharing class HOT_ServiceAppointmentReportController {
         for(WorkOrder wo:workOrders){
             WOtoRequest.put(wo.Id, wo.HOT_Request__c);
         }
-        List<HOT_Request__c> requests = [SELECT Id, AssignmentType__c, IsAcute__c, Status__c        
+        List<HOT_Request__c> requests = [SELECT Id, AssignmentType__c, IsAcute__c, Status__c, Name, CreatedDate, Subject__c        
                                          FROM HOT_Request__c WHERE Id IN :WOtoRequest.values()];
         
         Map<Id, HOT_Request__c> requestMap = new Map<Id, HOT_Request__c>();
