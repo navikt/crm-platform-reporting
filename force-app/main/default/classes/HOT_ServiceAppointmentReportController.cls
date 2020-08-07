@@ -25,7 +25,7 @@ public with sharing class HOT_ServiceAppointmentReportController {
         for(WorkOrder wo:workOrders){
             WOtoRequest.put(wo.Id, wo.HOT_Request__c);
         }
-        List<HOT_Request__c> requests = [SELECT Id, AssignmentType__c, IsAcute__c, Status__c        
+        List<HOT_Request__c> requests = [SELECT Id, AssignmentType__c, IsAcute__c, Status__c, Name, CreatedDate        
                                          FROM HOT_Request__c WHERE Id IN :WOtoRequest.values()];
         
         Map<Id, HOT_Request__c> requestMap = new Map<Id, HOT_Request__c>();
