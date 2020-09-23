@@ -112,12 +112,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ReportingData__c.HOT_ServiceAppointmentActualDuration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ReportingData__c.HOT_ServiceAppointmentAssignmentType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ReportingData__c.HOT_ServiceAppointmentCreatedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ReportingData__c.HOT_ServiceAppointmentDurationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
