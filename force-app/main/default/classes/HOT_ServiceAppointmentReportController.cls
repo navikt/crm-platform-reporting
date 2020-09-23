@@ -82,6 +82,8 @@ public with sharing class HOT_ServiceAppointmentReportController {
         repData.HOT_ServiceAppointmentDuration__c = serviceAppointment.Duration;
         repData.HOT_ServiceAppointmentAssignmentType__c = serviceAppointment.HOT_AssignmentType__c;
         repData.HOT_ServiceAppointmentOwner__c = serviceAppointment.Owner.Name;
+        repData.HOT_ServiceAppointmentDurationType__c = serviceAppointment.DurationType;
+        repData.HOT_ServiceAppointmentActualDuration__c = serviceAppointment.ActualDuration;
         return repData;
     }
 
