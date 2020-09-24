@@ -4,7 +4,9 @@ public with sharing class HOT_ServiceAppointmentReportController {
     public static void upsertReportingData(Date periodStart, Date periodEnd) {
         List<ServiceAppointment> serviceAppointments = [SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
                                                                EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime,
-                                                               CreatedDate, Status, Duration, HOT_AssignmentType__c, Owner.Name
+                                                               CreatedDate, Status, Duration, 
+                                                               //HOT_AssignmentType__c, 
+                                                               Owner.Name, ActualDuration, DurationType
                                                         FROM ServiceAppointment WHERE LastModifiedDate >= :periodStart AND LastModifiedDate <= :periodEnd];
         
         Map<Id, ServiceAppointment> IdtoSA = new Map<Id, ServiceAppointment>();
@@ -80,7 +82,7 @@ public with sharing class HOT_ServiceAppointmentReportController {
         repData.HOT_ServiceAppointmentStatus__c = serviceAppointment.Status;
         repData.HOT_ServiceAppointmentServiceTerritory__c = serviceAppointment.ServiceTerritory.Name;
         repData.HOT_ServiceAppointmentDuration__c = serviceAppointment.Duration;
-        repData.HOT_ServiceAppointmentAssignmentType__c = serviceAppointment.HOT_AssignmentType__c;
+        //repData.HOT_ServiceAppointmentAssignmentType__c = serviceAppointment.HOT_AssignmentType__c;
         repData.HOT_ServiceAppointmentOwner__c = serviceAppointment.Owner.Name;
         repData.HOT_ServiceAppointmentDurationType__c = serviceAppointment.DurationType;
         repData.HOT_ServiceAppointmentActualDuration__c = serviceAppointment.ActualDuration;
