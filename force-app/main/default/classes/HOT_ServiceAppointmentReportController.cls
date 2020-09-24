@@ -5,7 +5,7 @@ public with sharing class HOT_ServiceAppointmentReportController {
         List<ServiceAppointment> serviceAppointments = [SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
                                                                EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime,
                                                                CreatedDate, Status, Duration, 
-                                                               //HOT_AssignmentType__c, 
+                                                               //toLabel(HOT_AssignmentType__c), 
                                                                Owner.Name, ActualDuration, DurationType
                                                         FROM ServiceAppointment WHERE LastModifiedDate >= :periodStart AND LastModifiedDate <= :periodEnd];
         
