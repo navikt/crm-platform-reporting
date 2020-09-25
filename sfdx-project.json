@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "crm-platform-reporting",
-            "versionName": "ver 0.9",
-            "versionNumber": "0.9.0.NEXT",
+            "versionName": "ver 0.11",
+            "versionNumber": "0.11.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
@@ -69,6 +69,8 @@
         "crm-platform-reporting@0.7.0-2": "04t2o000000yPfOAAU",
         "crm-platform-reporting@0.7.0-3": "04t2o000000yPfTAAU",
         "crm-platform-reporting-dev@0.6.0-4": "04t2o000000yPfYAAU",
-        "crm-platform-reporting@0.9.0-1": "04t2o000000yPgWAAU"
+        "crm-platform-reporting@0.9.0-1": "04t2o000000yPgWAAU",
+        "crm-platform-reporting-dev@0.6.0-5": "04t2o000000yPhZAAU",
+        "crm-platform-reporting@0.10.0-1": "04t2o000000yPhjAAE"
     }
 }
