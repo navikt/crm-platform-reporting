@@ -14,6 +14,14 @@
                 <behavior>Edit</behavior>
                 <field>CRM_NavUnit__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CRM_IsMyRegion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CRM_IsMyNavUnit__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
