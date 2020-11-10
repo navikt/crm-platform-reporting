@@ -12,15 +12,17 @@ private class UriEventServiceTest {
     private static void addPersonRelatedRecordsToLog_forPerson(){
 
         Person__c testPerson=[SELECT Id, Name FROM Person__c LIMIT 1][0];        
-        List<UriEvent> uriEvents=new List<UriEvent>();
-        uriEvents.add(new UriEvent(testPerson.Id,DateTime.now(), 'Person__c', 'Read', 'user@user.nav.no', 'Standard'));
+
+        List<Log__c>testLogs=new List<Log__c>();
+        testLogs.add(addLog(testPerson.Id, 'Person__c'));
+        insert testLogs;
 
         Test.startTest();
-        UriEventService.addPersonRelatedRecordsToLog(uriEvents);
+        UriEventService.addPersonRelatedRecordsToLog(testLogs);
         Test.stopTest();
 
-        List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent'];
-        System.assertEquals(1, logs.size(), 'One log element is created');
+        List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_PersonIdent__c!=null];
+        System.assertEquals(1, logs.size(), 'One log element is updated');
         System.assertEquals(testPerson.Name, logs[0].CRM_PersonIdent__c, 'Log element should have persons fødselsr / dnr');
     }
 
@@ -33,51 +35,20 @@ private class UriEventServiceTest {
         System.assertEquals(null, accounts[0].INT_PersonIdent__c);
         System.assertNotEquals(null, accounts[1].INT_PersonIdent__c);
         
-        //create test uriEvents
-        List<UriEvent> uriEvents=new List<UriEvent>();
-        uriEvents.add(new UriEvent(accounts[0].Id,DateTime.now(), 'Account', 'Read', 'user@user.nav.no', 'Standard'));
-        uriEvents.add(new UriEvent(accounts[1].Id,DateTime.now(), 'Account', 'Read', 'user@user.nav.no', 'Standard'));
-
+        //create log elements
+        List<Log__c> testLogs=new List<Log__c>();
+        testLogs.add(addLog(accounts[0].Id, 'Account'));
+        testLogs.add(addLog(accounts[1].Id, 'Account'));
+        insert testLogs;
+        
         Test.startTest();
-        UriEventService.addPersonRelatedRecordsToLog(uriEvents);
+        UriEventService.addPersonRelatedRecordsToLog(testLogs);
         Test.stopTest();
 
-        List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent'];
-        System.assertEquals(1, logs.size(), 'One log element is created');
+        List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_PersonIdent__c!=null];
+        System.assertEquals(1, logs.size(), 'One log element is updated');
         System.assertEquals(accounts[1].INT_PersonIdent__c, logs[0].CRM_PersonIdent__c, 'Log element should have persons fødselsr / dnr');
- 
-     }
-
-     @IsTest
-     private static void addPersonRelatedRecordsToLog_forNotRelevantObject(){
-         
-         //create test uriEvents
-         List<UriEvent> uriEvents=new List<UriEvent>();
-         uriEvents.add(new UriEvent('0011j00000vDpWQAA0',DateTime.now(), 'TemporaryLayoyff__c', 'Read', 'user@user.nav.no', 'Standard'));
- 
- 
-         Test.startTest();
-         UriEventService.addPersonRelatedRecordsToLog(uriEvents);
-         Test.stopTest();
- 
-         List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent'];
-         System.assertEquals(0, logs.size(), 'Log is not created');
-      }
-
-      @IsTest
-      private static void addPersonRelatedRecordsToLog_forPortalUser(){ 
-          Person__c testPerson=[SELECT Id, Name FROM Person__c LIMIT 1][0];
-          
-          List<UriEvent> uriEvents=new List<UriEvent>();
-          uriEvents.add(new UriEvent(testPerson.Id,DateTime.now(), 'Person__c', 'Read', 'user@user.nav.no', 'Portal'));
-  
-          Test.startTest();
-          UriEventService.addPersonRelatedRecordsToLog(uriEvents);
-          Test.stopTest();
-  
-          List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent'];
-          System.assertEquals(0, logs.size(), 'Portal user events is not logged');
-       }
+        }
 
        @IsTest
        private static void addPersonRelatedRecordsToLog_forHotRequest(){
@@ -86,15 +57,16 @@ private class UriEventServiceTest {
            HOT_Request__c request=new HOT_Request__c(Account__c=testPerson.CRM_Account__c, Person__c=testPerson.Id);
            insert request;
       
-           List<UriEvent> uriEvents=new List<UriEvent>();
-           uriEvents.add(new UriEvent(request.Id,DateTime.now(), 'HOT_Request__c', 'Read', 'user@user.nav.no', 'Standard'));
-   
+           List<Log__c> testLogs=new List<Log__c>();
+           testLogs.add(addLog(request.Id, 'HOT_Request__c'));
+           insert testLogs;
+          
            Test.startTest();
-           UriEventService.addPersonRelatedRecordsToLog(uriEvents);
+           UriEventService.addPersonRelatedRecordsToLog(testLogs);
            Test.stopTest();
    
-           List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent' AND CRM_ObjectType__c='HOT_Request__c'];
-           System.assertEquals(1, logs.size(), 'One log element is created');
+           List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_PersonIdent__c!=null AND CRM_ObjectType__c='HOT_Request__c'];
+           System.assertEquals(1, logs.size(), 'One log element is updated');
            System.assertEquals(testPerson.Name, logs[0].CRM_PersonIdent__c, 'Log element should have persons fødselsr / dnr');
        }
 
@@ -114,17 +86,18 @@ private class UriEventServiceTest {
            ServiceAppointment sa=new ServiceAppointment(ParentRecordId=woli.Id);
            insert sa;
 
-           List<UriEvent> uriEvents=new List<UriEvent>();
-           uriEvents.add(new UriEvent(wo.Id,DateTime.now(), 'WorkOrder', 'Read', 'user@user.nav.no', 'Standard'));
-           uriEvents.add(new UriEvent(woli.Id,DateTime.now(), 'WorkOrderLineItem', 'Read', 'user@user.nav.no', 'Standard'));
-           uriEvents.add(new UriEvent(sa.Id,DateTime.now(), 'ServiceAppointment', 'Read', 'user@user.nav.no', 'Standard'));
-   
+           List<Log__c> testLogs=new List<Log__c>();
+           testLogs.add(addLog(wo.Id, 'WorkOrder'));
+           testLogs.add(addLog(woli.Id, 'WorkOrderLineItem'));
+           testLogs.add(addLog(sa.Id, 'ServiceAppointment'));
+           insert testLogs;
+          
            Test.startTest();
-           UriEventService.addPersonRelatedRecordsToLog(uriEvents);
+           UriEventService.addPersonRelatedRecordsToLog(testLogs);
            Test.stopTest();
    
-           List<Log__c> logs=[SELECT CRM_PersonIdent__c, CRM_ObjectType__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent'];
-           System.assertEquals(3, logs.size(), 'One log element is created');
+           List<Log__c> logs=[SELECT CRM_PersonIdent__c, CRM_ObjectType__c FROM Log__c WHERE CRM_PersonIdent__c!=null];
+           System.assertEquals(3, logs.size(), 'Three log elements are updated');
     
            System.assertEquals('WorkOrder', logs[0].CRM_ObjectType__c, 'First log element is Work Order');
            System.assertEquals(testPerson.Name, logs[0].CRM_PersonIdent__c, 'Work Order Log element should have persons fødselsr / dnr');
@@ -134,5 +107,17 @@ private class UriEventServiceTest {
 
            System.assertEquals('ServiceAppointment', logs[2].CRM_ObjectType__c, 'Third log element is Service Appointment');
            System.assertEquals(testPerson.Name, logs[2].CRM_PersonIdent__c, 'Third Log element should have persons fødselsr / dnr');
+       }
+
+       private static Log__c addLog(Id recordId, String objectType){
+        Log__c log = new Log__c();
+        log.CRM_RecordId__c=recordId;
+        log.CRM_EventDate__c=DateTime.now();
+        log.CRM_ObjectType__c=objectType; 
+        log.CRM_Operation__c='Read';
+        log.CRM_Type__c='LightningUriEvent';
+        log.CRM_Status__c='Pending';
+        log.CRM_Username__c='user@nav.no';
+        return log;
        }
 }
