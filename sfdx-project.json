@@ -8,19 +8,19 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.35.0.LATEST"
+                    "versionNumber": "0.43.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.24.0.LATEST"
+                    "versionNumber": "0.38.0.LATEST"
                 },
                 {
                     "package": "crm-community-base",
-                    "versionNumber": "0.8.0.LATEST"
+                    "versionNumber": "0.12.0.LATEST"
                 },
                 {
                     "package": "crm-hot",
-                    "versionNumber": "0.29.0.LATEST"
+                    "versionNumber": "1.20.0.LATEST"
                 }
             ]
         },
