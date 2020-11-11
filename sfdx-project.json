@@ -12,7 +12,7 @@
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.38.0.LATEST"
+                    "versionNumber": "0.39.0.LATEST"
                 },
                 {
                     "package": "crm-community-base",
@@ -61,6 +61,8 @@
         "crm-platform-reporting-dev": "0Ho2o000000fxWcCAI",
         "crm-hot-dev": "0Ho2o000000KylqCAC",
         "crm-platform-reporting@0.13.0-3": "04t2o000000yQLtAAM",
-        "crm-platform-reporting@0.13.0-4": "04t2o000000yQNfAAM"
+        "crm-platform-reporting@0.13.0-4": "04t2o000000yQNfAAM",
+        "crm-platform-reporting@0.14.0-1": "04t2o000000yQNkAAM",
+        "crm-platform-reporting@0.14.0-2": "04t2o000000yQOEAA2"
     }
 }

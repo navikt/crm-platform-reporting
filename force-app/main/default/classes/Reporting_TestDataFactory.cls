@@ -11,6 +11,7 @@ public with sharing class Reporting_TestDataFactory {
         log.CRM_Type__c='LightningUriEvent';
         log.CRM_Status__c='Pending';
         log.CRM_Username__c='user@nav.no';
+        log.CRM_UserType__c='Standard';
         return log;
        }
 }

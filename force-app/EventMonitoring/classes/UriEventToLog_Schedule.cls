@@ -30,7 +30,7 @@ global class UriEventToLog_Schedule Implements Schedulable
             
             // Async SOQL JSON Body for post
     
-            String content = '{"query":"SELECT Recordid, EventDate, QueriedEntities, Operation, Username FROM LightningUriEvent WHERE UserType=\'Standard\' AND EventDate>=' + startTime + ' AND EventDate<=' + endTime + '","targetObject":"Log__c","targetFieldMap":{"Username":"CRM_Username__c", "EventDate":"CRM_EventDate__c", "QueriedEntities":"CRM_ObjectType__c","Operation":"CRM_Operation__c","RecordId":"CRM_RecordId__c"}}';
+            String content = '{"query":"SELECT Recordid, EventDate, QueriedEntities, Operation, Username FROM LightningUriEvent WHERE EventDate>=' + startTime + ' AND EventDate<=' + endTime + '","targetObject":"Log__c","targetFieldMap":{"Username":"CRM_Username__c", "EventDate":"CRM_EventDate__c", "QueriedEntities":"CRM_ObjectType__c","Operation":"CRM_Operation__c","RecordId":"CRM_RecordId__c"}}';
             HttpRequest req = new HttpRequest();
             HttpResponse res = new HttpResponse();
             Http http = new Http();
