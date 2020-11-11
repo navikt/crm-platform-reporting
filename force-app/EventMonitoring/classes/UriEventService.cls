@@ -48,7 +48,7 @@ public with sharing class UriEventService {
             if(personIdent!=null){
                 log.CRM_Status__c='Completed';
                 log.CRM_PersonIdent__c=personIdent;
-                log.CRM_EventDate__c=log.CRM_EventDate__c.addHours(1); //adjust time zone
+                log.CRM_EventDate__c=log.CRM_EventDate__c.addHours(2); //adjust time zone
             }
             else{
                 log.CRM_Status__c='Not completed';
