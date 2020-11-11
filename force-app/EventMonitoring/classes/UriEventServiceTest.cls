@@ -14,7 +14,7 @@ private class UriEventServiceTest {
         Person__c testPerson=[SELECT Id, Name FROM Person__c LIMIT 1][0];        
 
         List<Log__c>testLogs=new List<Log__c>();
-        testLogs.add(addLog(testPerson.Id, 'Person__c'));
+        testLogs.add(Reporting_TestDataFactory.getLog(testPerson.Id, 'Person__c'));
         insert testLogs;
 
         Test.startTest();
@@ -37,8 +37,8 @@ private class UriEventServiceTest {
         
         //create log elements
         List<Log__c> testLogs=new List<Log__c>();
-        testLogs.add(addLog(accounts[0].Id, 'Account'));
-        testLogs.add(addLog(accounts[1].Id, 'Account'));
+        testLogs.add(Reporting_TestDataFactory.getLog(accounts[0].Id, 'Account'));
+        testLogs.add(Reporting_TestDataFactory.getLog(accounts[1].Id, 'Account'));
         insert testLogs;
         
         Test.startTest();
@@ -58,14 +58,14 @@ private class UriEventServiceTest {
            insert request;
       
            List<Log__c> testLogs=new List<Log__c>();
-           testLogs.add(addLog(request.Id, 'HOT_Request__c'));
+           testLogs.add(Reporting_TestDataFactory.getLog(request.Id, 'HOT_Request__c'));
            insert testLogs;
           
            Test.startTest();
            UriEventService.addPersonRelatedRecordsToLog(testLogs);
            Test.stopTest();
    
-           List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_PersonIdent__c!=null AND CRM_ObjectType__c='HOT_Request__c'];
+           List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_PersonIdent__c!=null];
            System.assertEquals(1, logs.size(), 'One log element is updated');
            System.assertEquals(testPerson.Name, logs[0].CRM_PersonIdent__c, 'Log element should have persons fødselsr / dnr');
        }
@@ -87,9 +87,9 @@ private class UriEventServiceTest {
            insert sa;
 
            List<Log__c> testLogs=new List<Log__c>();
-           testLogs.add(addLog(wo.Id, 'WorkOrder'));
-           testLogs.add(addLog(woli.Id, 'WorkOrderLineItem'));
-           testLogs.add(addLog(sa.Id, 'ServiceAppointment'));
+           testLogs.add(Reporting_TestDataFactory.getLog(wo.Id, 'WorkOrder'));
+           testLogs.add(Reporting_TestDataFactory.getLog(woli.Id, 'WorkOrderLineItem'));
+           testLogs.add(Reporting_TestDataFactory.getLog(sa.Id, 'ServiceAppointment'));
            insert testLogs;
           
            Test.startTest();
@@ -109,15 +109,21 @@ private class UriEventServiceTest {
            System.assertEquals(testPerson.Name, logs[2].CRM_PersonIdent__c, 'Third Log element should have persons fødselsr / dnr');
        }
 
-       private static Log__c addLog(Id recordId, String objectType){
-        Log__c log = new Log__c();
-        log.CRM_RecordId__c=recordId;
-        log.CRM_EventDate__c=DateTime.now();
-        log.CRM_ObjectType__c=objectType; 
-        log.CRM_Operation__c='Read';
-        log.CRM_Type__c='LightningUriEvent';
-        log.CRM_Status__c='Pending';
-        log.CRM_Username__c='user@nav.no';
-        return log;
-       }
+
+     @IsTest
+     private static void addPersonRelatedRecordsToLog_forNotRelevantObject(){
+         
+         //create test LOG
+         List<Log__c> testLogs=new List<Log__c>();
+         testLogs.add(Reporting_TestDataFactory.getLog('0011j00000vDpWQAA0', 'TemporaryLayoff__c'));
+         insert testLogs;
+         
+         Test.startTest();
+         UriEventService.addPersonRelatedRecordsToLog(testLogs);
+         Test.stopTest();
+ 
+         List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_Status__c='Not completed'];
+         System.assertEquals(1, logs.size(), 'Log is not completed');
+      }
+
 }
