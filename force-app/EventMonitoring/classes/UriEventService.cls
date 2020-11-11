@@ -1,14 +1,10 @@
 /* 
-convert UriEvent to Log__c record with lookup to Person Ident
+Handle converted UriEvent to Log__c record with lookup to Person Ident
 Make it possible for NAV's "snokelogg" to get log elemnts
 */
 public with sharing class UriEventService {
    
-    public static void addPersonRelatedRecordsToLog(List<UriEvent> uriEvents){
-
-        List<Log__c> logs=new List<Log__c>();
-
-        Map<Id,UriEvent> uriEventByRecordId = new Map<Id,UriEvent>();
+    public static void addPersonRelatedRecordsToLog(List<Log__c> logs){
 
         //record ids for each object we want to log
         Set<Id> personRecordIds=new Set<Id>();
@@ -19,51 +15,46 @@ public with sharing class UriEventService {
         Set<Id> workOrderLineItemRecordIds=new Set<Id>();
 
         //check if object ype should be logged
-        for(UriEvent ue:uriEvents){
-        
-            //only standard users are logged
-            if(ue.UserType!='Standard') continue;
+        for(Log__c log:logs){
 
-            switch on ue.QueriedEntities {
+            switch on log.CRM_ObjectType__c {
                when 'Person__c'{
-                uriEventByRecordId.put(ue.RecordId,ue);
-                personRecordIds.add(ue.RecordId);
+                personRecordIds.add(log.CRM_RecordId__c);
                }
                when 'Account'{
-                uriEventByRecordId.put(ue.RecordId,ue);
-                accountRecordIds.add(ue.RecordId);
+                accountRecordIds.add(log.CRM_RecordId__c);
                }
                when 'HOT_Request__c'{
-                uriEventByRecordId.put(ue.RecordId,ue);
-                hotRequestRecordIds.add(ue.RecordId);
+                hotRequestRecordIds.add(log.CRM_RecordId__c);
                }
                when 'WorkOrder'{
-                uriEventByRecordId.put(ue.RecordId,ue);
-                workOrderRecordIds.add(ue.RecordId);
+                workOrderRecordIds.add(log.CRM_RecordId__c);
                }
                when 'WorkOrderLineItem'{
-                uriEventByRecordId.put(ue.RecordId,ue);
-                workOrderLineItemRecordIds.add(ue.RecordId);
+                workOrderLineItemRecordIds.add(log.CRM_RecordId__c);
                }
                when 'ServiceAppointment'{
-                uriEventByRecordId.put(ue.RecordId,ue);
-                serviceAppointmentRecordIds.add(ue.RecordId);
+                serviceAppointmentRecordIds.add(log.CRM_RecordId__c);
                }
            }
-          
         }
 
         //get related person ident for each object
         Map<Id,String> personIdentByRecordId=getPersonIdentsForEachObject(personRecordIds, accountRecordIds, hotRequestRecordIds, workOrderRecordIds, workOrderLineItemRecordIds, serviceAppointmentRecordIds);
 
-        //add log elemnt with person ident
-        for(Id recordId:personIdentByRecordId.keyset()){
-            logs.add(addLogElement(uriEventByRecordId.get(recordId),personIdentByRecordId.get(recordId)));
+        //update log element
+        for(Log__c log:logs){
+            String personIdent=personIdentByRecordId.get(log.CRM_RecordId__c);
+            if(personIdent!=null){
+                log.CRM_Status__c='Completed';
+                log.CRM_PersonIdent__c=personIdent;
+                log.CRM_EventDate__c=log.CRM_EventDate__c.addHours(2); //adjust time zone
+            }
+            else{
+                log.CRM_Status__c='Not completed';
+            }
         }
-
-        if(logs.size()>0){
-            insert logs;
-        }
+        update logs;
     }
 
     private static Map<Id,String> getPersonIdentsForEachObject(Set<Id> personRecordIds, Set<Id> accountRecordIds, Set<Id> hotRequestRecordIds, Set<Id> workOrderRecordIds, Set<Id> workOrderLineItemRecordIds, Set<Id> serviceAppointmentRecordIds){
@@ -110,19 +101,6 @@ public with sharing class UriEventService {
                     personIdentByRecordId.put(sa.Id,sa.Account.INT_PersonIdent__c);
                 }
             }
-
-
         return personIdentByRecordId;
-    }
-
-    private static Log__c addLogElement(UriEvent ue, String personIdent){
-        return new Log__c(
-            CRM_RecordId__c=ue.RecordId, 
-            CRM_EventDate__c=ue.EventDate, 
-            CRM_ObjectType__c=ue.QueriedEntities, 
-            CRM_Operation__c=ue.Operation , 
-            CRM_PersonIdent__c=personIdent, 
-            CRM_Type__c='LightningUriEvent'
-        );
     }
 }

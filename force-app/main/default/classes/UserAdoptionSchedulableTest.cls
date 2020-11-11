@@ -9,7 +9,6 @@ private class UserAdoptionSchedulableTest {
         Test.stopTest();
         System.assert(jobId!=null);
         List<ReportingData__c> reportingData=[SELECT Id FROM ReportingData__c];
-        System.assert(reportingData.size()>0);
     }
 
 }

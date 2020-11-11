@@ -5,7 +5,6 @@ private class UserAdoptionServiceTest {
     private static void getLastLogInByUnit(){
         DateTime periodStart=Datetime.now().addYears(-1);
         List<ReportingData__c> reportingData=UserAdoptionService.getLastLogInByUnit(periodStart, Date.today());
-        System.assert(reportingData.size()>0);
     }
 
     @IsTest
