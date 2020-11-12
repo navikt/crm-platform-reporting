@@ -7,7 +7,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Log__c.CRM_ObjectType__c</field>
+        <field>Log__c.CRM_QueriedEntity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
