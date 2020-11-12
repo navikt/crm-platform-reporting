@@ -8,7 +8,7 @@ public with sharing class DeleteLog_Schedule implements Schedulable, Database.Ba
     }
 
     public  DeleteLog_Schedule(){
-        this.LOG_QUERY='SELECT Id FROM Log__c WHERE CRM_Status__c=\'Not completed\' OR (CRM_Status__c=\'Pending\' AND (NOT CRM_UserName__c LIKE\'%nav.no\'))';
+        this.LOG_QUERY='SELECT Id FROM Log__c WHERE CRM_Status__c=\'Not completed\'';
     }
     
     public  DeleteLog_Schedule(string condition){
