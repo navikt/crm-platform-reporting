@@ -135,4 +135,52 @@ private class UriEventServiceTest {
            System.assertEquals('ServiceAppointment', logs[2].CRM_QueriedEntity__c, 'Third log element is Service Appointment');
            System.assertEquals(testPerson.Name, logs[2].CRM_PersonIdent__c, 'Third Log element should have persons fødselsr / dnr');
        }
+
+       @IsTest
+       private static void addPersonRelatedRecordsToLog_forCaseAndChatTranscript(){
+   
+           Person__c testPerson=[SELECT Id, Name, CRM_Account__c FROM Person__c LIMIT 1][0];
+           Case testCase=new Case(AccountId=testPerson.CRM_Account__c, Origin='Web',Subject='Test Case');
+           insert testCase;
+
+           LiveChatVisitor visitor=new 	LiveChatVisitor();
+           insert visitor;
+           LiveChatTranscript testTranscript=new LiveChatTranscript(AccountId=testPerson.CRM_Account__c, CaseId=testCase.Id, LiveChatVisitorId=visitor.Id);
+           insert testTranscript;
+
+      
+           List<UriEvent> uriEvents=new List<UriEvent>();
+           uriEvents.add(new UriEvent(testCase.Id,DateTime.now(), 'Case', 'Read', 'user@user.nav.no', 'Standard'));
+           uriEvents.add(new UriEvent(testTranscript.Id,DateTime.now(), 'LiveChatTranscript', 'Read', 'user@user.nav.no', 'Standard'));
+   
+           Test.startTest();
+           UriEventService.addPersonRelatedRecordsToLog(uriEvents);
+           Test.stopTest();
+   
+           List<Log__c> logs=[SELECT CRM_PersonIdent__c, CRM_QueriedEntity__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent'];
+           System.assertEquals(2, logs.size(), 'Two log element is created');
+           System.assertEquals(testPerson.Name, logs[0].CRM_PersonIdent__c, 'Log element should have persons fødselsr / dnr');
+           System.assertEquals(testPerson.Name, logs[1].CRM_PersonIdent__c, 'Log element should have persons fødselsr / dnr');
+           System.assertEquals('Case', logs[0].CRM_QueriedEntity__c);
+           System.assertEquals('LiveChatTranscript', logs[1].CRM_QueriedEntity__c);
+       }
+
+       @IsTest
+       private static void addPersonRelatedRecordsToLog_forNavTask(){
+        Person__c testPerson=[SELECT Id, Name, CRM_Account__c FROM Person__c LIMIT 1][0];
+        NavTask__c testTask=new NavTask__c(CRM_Account__c=testPerson.CRM_Account__c);
+        insert testTask;
+
+        List<UriEvent> uriEvents=new List<UriEvent>();
+        uriEvents.add(new UriEvent(testTask.Id,DateTime.now(), 'NavTask__c', 'Read', 'user@user.nav.no', 'Standard'));
+
+        Test.startTest();
+        UriEventService.addPersonRelatedRecordsToLog(uriEvents);
+        Test.stopTest();
+
+        List<Log__c> logs=[SELECT CRM_PersonIdent__c FROM Log__c WHERE CRM_Type__c='LightningUriEvent' AND CRM_QueriedEntity__c='NavTask__c'];
+        System.assertEquals(1, logs.size(), 'One log element is created');
+        System.assertEquals(testPerson.Name, logs[0].CRM_PersonIdent__c, 'Log element should have persons fødselsr / dnr');
+       
+       }
 }

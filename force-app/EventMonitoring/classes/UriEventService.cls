@@ -17,6 +17,9 @@ public with sharing class UriEventService {
         Set<Id> serviceAppointmentRecordIds=new Set<Id>();
         Set<Id> workOrderRecordIds=new Set<Id>();
         Set<Id> workOrderLineItemRecordIds=new Set<Id>();
+        Set<Id> caseRecordIds=new Set<Id>();
+        Set<Id> chatTranscriptRecordIds=new Set<Id>();
+        Set<Id> navTaskRecordIds=new Set<Id>();
 
         //check if object ype should be logged
         for(UriEvent ue:uriEvents){
@@ -49,12 +52,24 @@ public with sharing class UriEventService {
                 uriEventByRecordId.put(ue.RecordId,ue);
                 serviceAppointmentRecordIds.add(ue.RecordId);
                }
+               when 'Case'{
+                uriEventByRecordId.put(ue.RecordId,ue);
+                caseRecordIds.add(ue.RecordId);
+               }
+               when 'LiveChatTranscript'{
+                uriEventByRecordId.put(ue.RecordId,ue);
+                chatTranscriptRecordIds.add(ue.RecordId);
+               }
+               when 'NavTask__c'{
+                uriEventByRecordId.put(ue.RecordId,ue);
+                navTaskRecordIds.add(ue.RecordId);
+               }
            }
           
         }
 
         //get related person ident for each object
-        Map<Id,String> personIdentByRecordId=getPersonIdentsForEachObject(personRecordIds, accountRecordIds, hotRequestRecordIds, workOrderRecordIds, workOrderLineItemRecordIds, serviceAppointmentRecordIds);
+        Map<Id,String> personIdentByRecordId=getPersonIdentsForEachObject(personRecordIds, accountRecordIds, hotRequestRecordIds, workOrderRecordIds, workOrderLineItemRecordIds, serviceAppointmentRecordIds, caseRecordIds,chatTranscriptRecordIds,navTaskRecordIds);
 
         //add log elemnt with person ident
         for(Id recordId:personIdentByRecordId.keyset()){
@@ -66,7 +81,7 @@ public with sharing class UriEventService {
         }
     }
 
-    private static Map<Id,String> getPersonIdentsForEachObject(Set<Id> personRecordIds, Set<Id> accountRecordIds, Set<Id> hotRequestRecordIds, Set<Id> workOrderRecordIds, Set<Id> workOrderLineItemRecordIds, Set<Id> serviceAppointmentRecordIds){
+    private static Map<Id,String> getPersonIdentsForEachObject(Set<Id> personRecordIds, Set<Id> accountRecordIds, Set<Id> hotRequestRecordIds, Set<Id> workOrderRecordIds, Set<Id> workOrderLineItemRecordIds, Set<Id> serviceAppointmentRecordIds, Set<Id> caseRecordIds, Set<Id> chatTranscriptRecordIds, Set<Id> navTaskRecordIds){
         Map<Id,String> personIdentByRecordId = new Map<Id,String>();
 
         //Person
@@ -111,6 +126,26 @@ public with sharing class UriEventService {
                 }
             }
 
+            //Case
+             if(caseRecordIds.size()>0){
+                for(Case c:[SELECT Id, Account.INT_PersonIdent__c FROM Case WHERE Id in:caseRecordIds]){
+                    personIdentByRecordId.put(c.Id,c.Account.INT_PersonIdent__c);
+                }
+            }
+
+             //Chat Transcript
+             if(chatTranscriptRecordIds.size()>0){
+                for(LiveChatTranscript c:[SELECT Id, Account.INT_PersonIdent__c FROM LiveChatTranscript WHERE Id in:chatTranscriptRecordIds]){
+                    personIdentByRecordId.put(c.Id,c.Account.INT_PersonIdent__c);
+                }
+            }
+
+             //NAV Task
+             if(navTaskRecordIds.size()>0){
+                for(NavTask__c navTask:[SELECT Id, CRM_Account__r.INT_PersonIdent__c FROM NavTask__c WHERE Id in:navTaskRecordIds]){
+                    personIdentByRecordId.put(navTask.Id, navTask.CRM_Account__r.INT_PersonIdent__c );
+                }
+            }
 
         return personIdentByRecordId;
     }
