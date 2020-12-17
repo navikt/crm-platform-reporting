@@ -46,6 +46,12 @@
 		},
 		"nameSettings": {
 			"enableMiddleName": true
-		}
+		},
+        "omniChannelSettings": {
+            "enableOmniChannel": true
+		},
+		"liveAgentSettings": {
+            "enableLiveAgent": true
+        }
   }
 }
