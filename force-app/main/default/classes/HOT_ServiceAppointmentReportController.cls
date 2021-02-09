@@ -1,12 +1,10 @@
 public with sharing class HOT_ServiceAppointmentReportController {
- 
 
     public static void upsertReportingData(Date periodStart, Date periodEnd) {
         List<ServiceAppointment> serviceAppointments = [SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
-                                                               EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime,
-                                                               CreatedDate, Status, Duration, 
-                                                               HOT_AssignmentType__c, 
-                                                               Owner.Name, ActualDuration, DurationType
+                                                               EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime, HOT_HapticCommunication__c,
+                                                               CreatedDate, Status, Duration, HOT_AssignmentType__c, Owner.Name, ActualDuration, DurationType, AppointmentNumber,
+                                                               HOT_IsSerieoppdrag__c, HOT_CancelComment__c, HOT_IsAcute__c, HOT_IsScreenInterpreter__c, HOT_ReleaseDate__c, HOT_FreelanceSubject__c, HOT_DeadlineDate__c
                                                         FROM ServiceAppointment WHERE LastModifiedDate >= :periodStart AND LastModifiedDate <= :periodEnd];
         
         Map<Id, ServiceAppointment> IdtoSA = new Map<Id, ServiceAppointment>();
@@ -61,32 +59,44 @@ public with sharing class HOT_ServiceAppointmentReportController {
 
     public static ReportingData__c setFieldValues(ReportingData__c repData, ServiceAppointment serviceAppointment, HOT_Request__c request){
         repData.CRM_Category__c = 'Service Appointment';
-        repData.HOT_AssignmentType__c = request.AssignmentType__c;
-        repData.HOT_IsAcute__c = request.IsAcute__c;
-        repData.HOT_IsEmployedInterpreter__c = serviceAppointment.HOT_IsEmployedInterpreter__c;
-        repData.HOT_IsFreelanceInterpreter__c = serviceAppointment.HOT_IsReleasedToFreelance__c;
-        repData.HOT_ServiceAppointment__c = serviceAppointment.Id;
-        repData.HOT_WorkType__c = serviceAppointment.WorkType.Name;
-        repData.HOT_Status__c = request.Status__c;
         repData.CRM_Region__c = serviceAppointment.ServiceTerritory.Name;
+
+        repData.HOT_ServiceAppointment__c = serviceAppointment.Id;
+        repData.HOT_CreatedDate__c = serviceAppointment.CreatedDate;
+
+        repData.HOT_RecordName__c = serviceAppointment.AppointmentNumber;
+        repData.HOT_Request__c = serviceAppointment.HOT_Request__c;
+        repData.HOT_Subject__c = serviceAppointment.Subject;
+        repData.HOT_AssignmentType__c = serviceAppointment.HOT_AssignmentType__c;
+        repData.HOT_WorkType__c = serviceAppointment.WorkType.Name;
+        repData.HOT_IsHapticCommunication__c = serviceAppointment.HOT_HapticCommunication__c;
+        repData.HOT_IsSerieoppdrag__c = serviceAppointment.HOT_IsSerieoppdrag__c;
+        
+        repData.HOT_Owner__c = serviceAppointment.Owner.Name;
+        repData.HOT_ServiceTerritory__c = serviceAppointment.ServiceTerritory.Name;
+        repData.HOT_Status__c = serviceAppointment.Status;
+        repData.HOT_CancelComment__c = serviceAppointment.HOT_CancelComment__c;
+        repData.HOT_IsAcute__c = serviceAppointment.HOT_IsAcute__c;
+        repData.HOT_IsScreenInterpreter__c = serviceAppointment.HOT_IsScreenInterpreter__c;
+
         repData.HOT_EarliestStartTime__c = serviceAppointment.EarliestStartTime;
         repData.HOT_DueDate__c = serviceAppointment.DueDate;
+
         repData.HOT_SchedStartTime__c = serviceAppointment.SchedStartTime;
         repData.HOT_SchedEndTime__c = serviceAppointment.SchedEndTime;
+        repData.HOT_Duration__c = serviceAppointment.Duration;
+        repData.HOT_DurationType__c = serviceAppointment.DurationType;
+
         repData.HOT_ActualStartTime__c = serviceAppointment.ActualStartTime;
         repData.HOT_ActualEndTime__c = serviceAppointment.ActualEndTime;
-        repData.HOT_RequestCreatedDate__c = request.CreatedDate;
-        repData.HOT_RequestName__c = request.Name;
-        repData.HOT_RequestSubject__c = request.Subject__c;
-        repData.HOT_ServiceAppointmentCreatedDate__c = serviceAppointment.CreatedDate;
-        repData.HOT_ServiceAppointmentStatus__c = serviceAppointment.Status;
-        repData.HOT_ServiceAppointmentServiceTerritory__c = serviceAppointment.ServiceTerritory.Name;
-        repData.HOT_ServiceAppointmentDuration__c = serviceAppointment.Duration;
-        repData.HOT_ServiceAppointmentAssignmentType__c = serviceAppointment.HOT_AssignmentType__c;
-        repData.HOT_ServiceAppointmentOwner__c = serviceAppointment.Owner.Name;
-        repData.HOT_ServiceAppointmentDurationType__c = serviceAppointment.DurationType;
-        repData.HOT_ServiceAppointmentActualDuration__c = serviceAppointment.ActualDuration;
+        repData.HOT_ActualDuration__c = serviceAppointment.ActualDuration;
+        
+        repData.HOT_IsEmployedInterpreter__c = serviceAppointment.HOT_IsEmployedInterpreter__c;
+        repData.HOT_IsFreelanceInterpreter__c = serviceAppointment.HOT_IsReleasedToFreelance__c;
+        repData.HOT_FreelanceSubject__c = serviceAppointment.HOT_FreelanceSubject__c;
+        repData.HOT_ReleaseDate__c = serviceAppointment.HOT_ReleaseDate__c;
+        repData.HOT_DeadlineDate__c = serviceAppointment.HOT_DeadlineDate__c;
+
         return repData;
     }
-
 }
