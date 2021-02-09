@@ -122,42 +122,42 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentActualDuration__c</field>
+        <field>ReportingData__c.HOT_ActualDuration__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentAssignmentType__c</field>
+        <field>ReportingData__c.HOT_AssignmentType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentCreatedDate__c</field>
+        <field>ReportingData__c.HOT_CreatedDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentDurationType__c</field>
+        <field>ReportingData__c.HOT_DurationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentDuration__c</field>
+        <field>ReportingData__c.HOT_Duration__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentOwner__c</field>
+        <field>ReportingData__c.HOT_Owner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentServiceTerritory__c</field>
+        <field>ReportingData__c.HOT_ServiceTerritory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_ServiceAppointmentStatus__c</field>
+        <field>ReportingData__c.HOT_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
