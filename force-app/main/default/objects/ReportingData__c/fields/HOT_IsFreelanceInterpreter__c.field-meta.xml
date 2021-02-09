@@ -3,7 +3,7 @@
     <fullName>HOT_IsFreelanceInterpreter__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>SA: Freelance Interpreter</label>
+    <label>Freelance Interpreter</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HOT_ServiceAppointmentStatus__c</fullName>
     <externalId>false</externalId>
-    <label>SA: Status</label>
+    <label>Status</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
