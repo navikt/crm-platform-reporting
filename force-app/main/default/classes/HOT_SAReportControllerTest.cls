@@ -19,7 +19,16 @@ private class HOT_SAReportControllerTest{
 		Test.stopTest();
 
         List<ReportingData__c> reportingData=[SELECT Id FROM ReportingData__c];
-        System.assertEquals(reportingData.size(), 1);
+		System.assertEquals(reportingData.size(), 1);
+		
+		ServiceAppointment serviceAppointment = [SELECT Id, Subject FROM ServiceAppointment LIMIT 1];
+		serviceAppointment.Subject = 'Nummer 2';
+		update serviceAppointment;
+
+		HOT_ServiceAppointmentReportController.upsertReportingData(Date.today(), Date.today().addDays(1));
+
+        List<ReportingData__c> reportingData2=[SELECT Id FROM ReportingData__c];
+		System.assertEquals(reportingData2.size(), 1);
 	}
 
 }
