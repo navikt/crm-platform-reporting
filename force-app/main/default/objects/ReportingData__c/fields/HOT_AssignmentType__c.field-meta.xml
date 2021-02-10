@@ -3,9 +3,11 @@
     <fullName>HOT_AssignmentType__c</fullName>
     <externalId>false</externalId>
     <label>Assignment Type</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HOT_AssignmentType</valueSetName>
+    </valueSet>
 </CustomField>
