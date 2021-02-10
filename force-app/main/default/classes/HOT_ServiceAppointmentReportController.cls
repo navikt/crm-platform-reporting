@@ -4,7 +4,8 @@ public with sharing class HOT_ServiceAppointmentReportController {
         List<ServiceAppointment> serviceAppointments = [SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
                                                                EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime, HOT_HapticCommunication__c,
                                                                CreatedDate, Status, Duration, HOT_AssignmentType__c, Owner.Name, ActualDuration, DurationType, AppointmentNumber,
-                                                               HOT_IsSerieoppdrag__c, HOT_CancelComment__c, HOT_IsAcute__c, HOT_IsScreenInterpreter__c, HOT_ReleaseDate__c, HOT_FreelanceSubject__c, HOT_DeadlineDate__c
+                                                               HOT_IsSerieoppdrag__c, HOT_CancelComment__c, HOT_IsAcute__c, HOT_IsScreenInterpreter__c, HOT_ReleaseDate__c,
+                                                               HOT_FreelanceSubject__c, HOT_DeadlineDate__c, HOT_Request__c, Subject
                                                         FROM ServiceAppointment WHERE LastModifiedDate >= :periodStart AND LastModifiedDate <= :periodEnd];
         
         Map<Id, ServiceAppointment> IdtoSA = new Map<Id, ServiceAppointment>();

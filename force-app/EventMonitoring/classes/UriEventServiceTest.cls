@@ -111,7 +111,7 @@ private class UriEventServiceTest {
            WorkOrderLineItem woli=new WorkOrderLineItem(WorkOrderId=wo.Id);
            insert woli;
 
-           ServiceAppointment sa=new ServiceAppointment(ParentRecordId=woli.Id);
+           ServiceAppointment sa=new ServiceAppointment(ParentRecordId=woli.Id, HOT_Request__c=request.Id);
            insert sa;
 
            List<UriEvent> uriEvents=new List<UriEvent>();
