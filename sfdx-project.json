@@ -20,7 +20,7 @@
                 },
                 {
                     "package": "crm-hot",
-                    "versionNumber": "1.20.0.LATEST"
+                    "versionNumber": "1.49.0.LATEST"
                 }
             ]
         },
@@ -44,7 +44,7 @@
                 },
                 {
                     "package": "crm-hot-dev",
-                    "versionNumber": "0.29.0.LATEST"
+                    "versionNumber": "0.49.0.LATEST"
                 }
             ]
         }

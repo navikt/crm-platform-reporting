@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HOT_RequestSubject__c</fullName>
+    <fullName>HOT_IsHapticCommunication__c</fullName>
+    <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Request: Subject</label>
-    <length>255</length>
-    <required>false</required>
+    <label>HapticCommunication</label>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Checkbox</type>
 </CustomField>

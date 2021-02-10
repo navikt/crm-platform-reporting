@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HOT_ServiceAppointmentActualDuration__c</fullName>
+    <fullName>HOT_CreatedDate__c</fullName>
     <externalId>false</externalId>
-    <label>SA: Actual Duration</label>
-    <precision>18</precision>
+    <label>Created Date</label>
     <required>false</required>
-    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>false</unique>
+    <type>DateTime</type>
 </CustomField>
