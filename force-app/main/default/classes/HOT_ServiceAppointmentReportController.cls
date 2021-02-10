@@ -68,7 +68,6 @@ public with sharing class HOT_ServiceAppointmentReportController {
         repData.HOT_RecordName__c = serviceAppointment.AppointmentNumber;
         repData.HOT_Request__c = serviceAppointment.HOT_Request__c;
         repData.HOT_Subject__c = serviceAppointment.Subject;
-        repData.HOT_AssignmentType__c = serviceAppointment.HOT_AssignmentType__c;
         repData.HOT_WorkType__c = serviceAppointment.WorkType.Name;
         repData.HOT_IsHapticCommunication__c = serviceAppointment.HOT_HapticCommunication__c;
         repData.HOT_IsSerieoppdrag__c = serviceAppointment.HOT_IsSerieoppdrag__c;
