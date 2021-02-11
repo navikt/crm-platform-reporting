@@ -182,7 +182,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>ReportingData__c.HOT_Status__c</field>
+        <field>ReportingData__c.HOT_Status2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
