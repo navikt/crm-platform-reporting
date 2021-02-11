@@ -3,6 +3,14 @@
     <label>Kategori</label>
     <name>CRM_Category__c</name>
     <picklistValues>
+        <masterLabel>New Users</masterLabel>
+        <translation><!-- New Users --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Service Appointment</masterLabel>
+        <translation><!-- Service Appointment --></translation>
+    </picklistValues>
+    <picklistValues>
         <masterLabel>User Adoption</masterLabel>
         <translation><!-- User Adoption --></translation>
     </picklistValues>
