@@ -16,7 +16,8 @@ private class HOT_SAReportControllerTest {
     @isTest
     static void upsertReportingDataTest() {
         Test.startTest();
-        //HOT_ServiceAppointmentReportController.upsertReportingData(Date.today(), Date.today().addDays(1));
+		HOT_ServiceAppointmentReportController btch = new HOT_ServiceAppointmentReportController();
+		Database.executeBatch( btch, 2000 );
         Test.stopTest();
 
         List<ReportingData__c> reportingData = [
@@ -33,7 +34,7 @@ private class HOT_SAReportControllerTest {
         serviceAppointment.Subject = 'Nummer 2';
         update serviceAppointment;
 
-        //HOT_ServiceAppointmentReportController.upsertReportingData(Date.today(), Date.today().addDays(1));
+		Database.executeBatch( btch, 2000 );
 
         List<ReportingData__c> reportingData2 = [
             SELECT Id
