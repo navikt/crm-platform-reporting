@@ -4,21 +4,6 @@ public with sharing class HOT_ServiceAppointmentReportController implements Data
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        System.debug([SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
-        EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime, HOT_HapticCommunication__c,
-        CreatedDate, Status, Duration, Owner.Name, ActualDuration, DurationType, AppointmentNumber,
-        HOT_IsSerieoppdrag__c, HOT_CancelComment__c, HOT_IsAcute__c, HOT_IsScreenInterpreter__c, HOT_ReleaseDate__c,
-        HOT_FreelanceSubject__c, HOT_DeadlineDate__c, HOT_Request__c, Subject 
-        FROM ServiceAppointment WHERE LastModifiedDate >= 
-        :this.periodStart
-        AND LastModifiedDate <= 
-        :this.periodEnd]);
-        ServiceAppointment sa = [SELECT Id, LastModifiedDate FROM ServiceAppointment];
-        System.debug(sa);
-        System.debug(this.periodStart);
-        System.debug(this.periodEnd);
-        System.debug(sa.LastModifiedDate >= this.periodStart);
-        System.debug(sa.LastModifiedDate >= this.periodEnd);
         return Database.getQueryLocator([SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
         EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime, HOT_HapticCommunication__c,
         CreatedDate, Status, Duration, Owner.Name, ActualDuration, DurationType, AppointmentNumber,
