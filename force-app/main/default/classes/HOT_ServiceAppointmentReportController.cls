@@ -1,24 +1,67 @@
-public with sharing class HOT_ServiceAppointmentReportController {
+public with sharing class HOT_ServiceAppointmentReportController implements Database.Batchable<SObject> {
+    public String getQuery() {
+        String query =
+            'SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,' +
+            'EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime, HOT_HapticCommunication__c,' +
+            'CreatedDate, Status, Duration, Owner.Name, ActualDuration, DurationType, AppointmentNumber,' +
+            'HOT_IsSerieoppdrag__c, HOT_CancelComment__c, HOT_IsAcute__c, HOT_IsScreenInterpreter__c, HOT_ReleaseDate__c,' +
+            'HOT_FreelanceSubject__c, HOT_DeadlineDate__c, HOT_Request__c, Subject' +
+            'FROM ServiceAppointment WHERE LastModifiedDate >= ' +
+            this.periodStart.format() +
+            'AND LastModifiedDate <= ' +
+            this.periodEnd.format();
+        return query;
+    }
 
-    public static void upsertReportingData(Date periodStart, Date periodEnd) {
-        List<ServiceAppointment> serviceAppointments = [SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
-                                                               EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime, HOT_HapticCommunication__c,
-                                                               CreatedDate, toLabel(Status), Duration, Owner.Name, ActualDuration, DurationType, AppointmentNumber,
-                                                               HOT_IsSerieoppdrag__c, HOT_CancelComment__c, HOT_IsAcute__c, HOT_IsScreenInterpreter__c, HOT_ReleaseDate__c,
-                                                               HOT_FreelanceSubject__c, HOT_DeadlineDate__c, HOT_Request__c, Subject
-                                                        FROM ServiceAppointment WHERE LastModifiedDate >= :periodStart AND LastModifiedDate <= :periodEnd];
-        
-        List<ReportingData__c> reportingData = [SELECT Id, HOT_ServiceAppointment__c FROM ReportingData__c WHERE HOT_ServiceAppointment__c IN :serviceAppointments];
+    public Database.QueryLocator start(Database.BatchableContext bc) {
+        return Database.getQueryLocator(getQuery());
+    }
+
+    public void execute(
+        Database.BatchableContext bc,
+        List<ServiceAppointment> scope
+    ) {
+        upsertReportingData(scope);
+    }
+
+    private Date periodStart;
+    private Date periodEnd;
+    public HOT_ServiceAppointmentReportController(
+        Date periodStart,
+        Date periodEnd
+    ) {
+        this.periodStart = periodStart;
+        this.periodEnd = periodEnd;
+    }
+
+    public HOT_ServiceAppointmentReportController() {
+        this.periodStart = Date.today().addDays(-1);
+        this.periodEnd = Date.today();
+    }
+
+    public void finish(Database.BatchableContext bc) {
+    }
+
+    public static void upsertReportingData(
+        List<ServiceAppointment> serviceAppointments
+    ) {
+        List<ReportingData__c> reportingData = [
+            SELECT Id, HOT_ServiceAppointment__c
+            FROM ReportingData__c
+            WHERE HOT_ServiceAppointment__c IN :serviceAppointments
+        ];
         Map<Id, ReportingData__c> SAIdtoRepData = new Map<Id, ReportingData__c>();
-        for(ReportingData__c repData:reportingData){
+        for (ReportingData__c repData : reportingData) {
             SAIdtoRepData.put(repData.HOT_ServiceAppointment__c, repData);
         }
-        
-        for(ServiceAppointment sa:serviceAppointments){
-            if(SAIdtoRepData.containsKey(sa.Id)){
-                SAIdtoRepData.put(sa.Id, setFieldValues(SAIdtoRepData.get(sa.Id), sa));
-            }
-            else{
+
+        for (ServiceAppointment sa : serviceAppointments) {
+            if (SAIdtoRepData.containsKey(sa.Id)) {
+                SAIdtoRepData.put(
+                    sa.Id,
+                    setFieldValues(SAIdtoRepData.get(sa.Id), sa)
+                );
+            } else {
                 ReportingData__c repData = new ReportingData__c();
                 SAIdtoRepData.put(sa.Id, setFieldValues(repData, sa));
             }
@@ -26,7 +69,10 @@ public with sharing class HOT_ServiceAppointmentReportController {
         upsert SAIdtoRepData.values();
     }
 
-    public static ReportingData__c setFieldValues(ReportingData__c repData, ServiceAppointment serviceAppointment){
+    public static ReportingData__c setFieldValues(
+        ReportingData__c repData,
+        ServiceAppointment serviceAppointment
+    ) {
         repData.CRM_Category__c = 'Service Appointment';
         repData.CRM_Region__c = serviceAppointment.ServiceTerritory.Name;
 
@@ -39,7 +85,7 @@ public with sharing class HOT_ServiceAppointmentReportController {
         repData.HOT_WorkType__c = serviceAppointment.WorkType.Name;
         repData.HOT_IsHapticCommunication__c = serviceAppointment.HOT_HapticCommunication__c;
         repData.HOT_IsSerieoppdrag__c = serviceAppointment.HOT_IsSerieoppdrag__c;
-        
+
         repData.HOT_Owner__c = serviceAppointment.Owner.Name;
         repData.HOT_ServiceTerritory__c = serviceAppointment.ServiceTerritory.Name;
         repData.HOT_Status2__c = serviceAppointment.Status;
@@ -58,7 +104,7 @@ public with sharing class HOT_ServiceAppointmentReportController {
         repData.HOT_ActualStartTime__c = serviceAppointment.ActualStartTime;
         repData.HOT_ActualEndTime__c = serviceAppointment.ActualEndTime;
         repData.HOT_ActualDuration__c = serviceAppointment.ActualDuration;
-        
+
         repData.HOT_IsEmployedInterpreter__c = serviceAppointment.HOT_IsEmployedInterpreter__c;
         repData.HOT_IsFreelanceInterpreter__c = serviceAppointment.HOT_IsReleasedToFreelance__c;
         repData.HOT_FreelanceSubject__c = serviceAppointment.HOT_FreelanceSubject__c;
