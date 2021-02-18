@@ -4,30 +4,51 @@ public with sharing class HOT_ServiceAppointmentReportController implements Data
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        return Database.getQueryLocator([SELECT Id, ParentRecordId, HOT_IsEmployedInterpreter__c, HOT_IsReleasedToFreelance__c, WorkType.Name, ServiceTerritory.Name,
-        EarliestStartTime, DueDate, SchedStartTime, SchedEndTime, ActualStartTime, ActualEndTime, HOT_HapticCommunication__c,
-        CreatedDate, Status, Duration, Owner.Name, ActualDuration, DurationType, AppointmentNumber,
-        HOT_IsSerieoppdrag__c, HOT_CancelComment__c, HOT_IsAcute__c, HOT_IsScreenInterpreter__c, HOT_ReleaseDate__c,
-        HOT_FreelanceSubject__c, HOT_DeadlineDate__c, HOT_Request__c, Subject 
-        FROM ServiceAppointment WHERE LastModifiedDate >= 
-        :this.periodStart
-        AND LastModifiedDate <= 
-        :this.periodEnd]);
+        return Database.getQueryLocator(
+            [
+                SELECT
+                    Id,
+                    ParentRecordId,
+                    HOT_IsEmployedInterpreter__c,
+                    HOT_IsReleasedToFreelance__c,
+                    WorkType.Name,
+                    ServiceTerritory.Name,
+                    EarliestStartTime,
+                    DueDate,
+                    SchedStartTime,
+                    SchedEndTime,
+                    ActualStartTime,
+                    ActualEndTime,
+                    HOT_HapticCommunication__c,
+                    CreatedDate,
+                    Status,
+                    Duration,
+                    Owner.Name,
+                    ActualDuration,
+                    DurationType,
+                    AppointmentNumber,
+                    HOT_IsSerieoppdrag__c,
+                    HOT_CancelComment__c,
+                    HOT_IsAcute__c,
+                    HOT_IsScreenInterpreter__c,
+                    HOT_ReleaseDate__c,
+                    HOT_FreelanceSubject__c,
+                    HOT_DeadlineDate__c,
+                    HOT_Request__c,
+                    Subject
+                FROM ServiceAppointment
+                WHERE LastModifiedDate >= :this.periodStart AND LastModifiedDate <= :this.periodEnd
+            ]
+        );
     }
 
-    public void execute(
-        Database.BatchableContext bc,
-        List<ServiceAppointment> scope
-    ) {
+    public void execute(Database.BatchableContext bc, List<ServiceAppointment> scope) {
         upsertReportingData(scope);
     }
 
     private Datetime periodStart;
     private Datetime periodEnd;
-    public HOT_ServiceAppointmentReportController(
-        Datetime periodStart,
-        Datetime periodEnd
-    ) {
+    public HOT_ServiceAppointmentReportController(Datetime periodStart, Datetime periodEnd) {
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
     }
@@ -40,9 +61,7 @@ public with sharing class HOT_ServiceAppointmentReportController implements Data
     public void finish(Database.BatchableContext bc) {
     }
 
-    public static void upsertReportingData(
-        List<ServiceAppointment> serviceAppointments
-    ) {
+    public static void upsertReportingData(List<ServiceAppointment> serviceAppointments) {
         List<ReportingData__c> reportingData = [
             SELECT Id, HOT_ServiceAppointment__c
             FROM ReportingData__c
@@ -55,10 +74,7 @@ public with sharing class HOT_ServiceAppointmentReportController implements Data
 
         for (ServiceAppointment sa : serviceAppointments) {
             if (SAIdtoRepData.containsKey(sa.Id)) {
-                SAIdtoRepData.put(
-                    sa.Id,
-                    setFieldValues(SAIdtoRepData.get(sa.Id), sa)
-                );
+                SAIdtoRepData.put(sa.Id, setFieldValues(SAIdtoRepData.get(sa.Id), sa));
             } else {
                 ReportingData__c repData = new ReportingData__c();
                 SAIdtoRepData.put(sa.Id, setFieldValues(repData, sa));
@@ -67,10 +83,7 @@ public with sharing class HOT_ServiceAppointmentReportController implements Data
         upsert SAIdtoRepData.values();
     }
 
-    public static ReportingData__c setFieldValues(
-        ReportingData__c repData,
-        ServiceAppointment serviceAppointment
-    ) {
+    public static ReportingData__c setFieldValues(ReportingData__c repData, ServiceAppointment serviceAppointment) {
         repData.CRM_Category__c = 'Service Appointment';
         repData.CRM_Region__c = serviceAppointment.ServiceTerritory.Name;
 

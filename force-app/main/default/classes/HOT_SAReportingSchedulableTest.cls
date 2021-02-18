@@ -6,10 +6,7 @@ private class HOT_SAReportingSchedulableTest {
     static void setup() {
         WorkType workType = HOT_TestDataFactory.createWorkType();
         insert workType;
-        HOT_Request__c request = HOT_TestDataFactory.createRequest(
-            'Subject',
-            worktype
-        );
+        HOT_Request__c request = HOT_TestDataFactory.createRequest('Subject', worktype);
         insert request;
         request.Status__c = 'Godkjent';
         update request;
@@ -18,17 +15,10 @@ private class HOT_SAReportingSchedulableTest {
     @IsTest
     private static void execute() {
         Test.startTest();
-        String jobId = System.schedule(
-            'HOT_SAReportingSchedulable',
-            CRON_EXP,
-            new HOT_SAReportingSchedulable()
-        );
+        String jobId = System.schedule('HOT_SAReportingSchedulable', CRON_EXP, new HOT_SAReportingSchedulable());
         Test.stopTest();
         System.assert(jobId != null);
-        List<ReportingData__c> reportingData = [
-            SELECT Id
-            FROM ReportingData__c
-        ];
+        List<ReportingData__c> reportingData = [SELECT Id FROM ReportingData__c];
         System.assertEquals(reportingData.size(), 0);
     }
 }
