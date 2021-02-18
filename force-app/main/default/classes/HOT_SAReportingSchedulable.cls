@@ -1,6 +1,6 @@
 global class HOT_SAReportingSchedulable implements Schedulable {
-
     global void execute(SchedulableContext sc) {
-        HOT_ServiceAppointmentReportController.upsertReportingData(Date.today().addDays(-1), Date.today());
+        HOT_ServiceAppointmentReportController btch = new HOT_ServiceAppointmentReportController();
+        Database.executeBatch(btch, 1000);
     }
 }
