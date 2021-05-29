@@ -1,4 +1,4 @@
-public class TaskRecordTypeIdUpdateQuery implements Database.Batchable<sObject>, Database.Stateful {
+public class TaskRecordTypeIdUpdateQuery implements Database.Batchable<sObject>{
     
     public final String query;
     public final id newRecordTypeId;
