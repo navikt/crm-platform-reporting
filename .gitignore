@@ -42,4 +42,7 @@ force-app/main/default/profiles/
 #translation meta
 force-app/main/default/translations/
 .ssdx/
+run.command
+run.cmd
+install.cmd
 force-app/main/default/lwc/jsconfig.json
