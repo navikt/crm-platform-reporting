@@ -3,6 +3,7 @@ private class UriEventServiceTest {
     @TestSetup
     static void makeData() {
         Group publicGroup = TestDataFactory.getPublicGroup('HMS Agder', 'group_47001');
+        TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
         TestDataFactory.getPersons(1, true);
         TestDataFactory.getAccounts(1, true);
     }
@@ -124,7 +125,11 @@ private class UriEventServiceTest {
         HOT_Request__c request = new HOT_Request__c(Account__c = testPerson.CRM_Account__c, Person__c = testPerson.Id);
         insert request;
 
-        WorkOrder wo = new WorkOrder(AccountId = testPerson.CRM_Account__c, HOT_Request__c = request.Id);
+        WorkType workType = HOT_TestDataFactory.createWorkType();
+        insert workType;
+
+        WorkOrder wo = HOT_TestDataFactory.createWorkOrder(request, workType);
+        wo.AccountId = testPerson.CRM_Account__c;
         insert wo;
 
         WorkOrderLineItem woli = new WorkOrderLineItem(WorkOrderId = wo.Id);
