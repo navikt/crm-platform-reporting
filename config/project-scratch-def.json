@@ -35,6 +35,10 @@
         "languageSettings": {
             "enableTranslationWorkbench": true
         },
+        "accountSettings": {
+            "enableAccountHistoryTracking": true,
+            "enableAccountTeams": true
+        },
         "fieldServiceSettings": {
             "fieldServiceOrgPref": true,
             "doesShareSaParentWoWithAr": false,
@@ -43,6 +47,9 @@
             "isGeoCodeSyncEnabled": false,
             "isLocationHistoryEnabled": false,
             "fieldServiceNotificationsOrgPref": true
+        },
+        "emailAdministrationSettings": {
+            "enableEnhancedEmailEnabled": true
         },
         "nameSettings": {
             "enableMiddleName": true
