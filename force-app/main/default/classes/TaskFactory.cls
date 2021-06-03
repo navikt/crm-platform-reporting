@@ -11,7 +11,7 @@ public class TaskFactory {
             Integer actualTasksWithTypeCount = (Math.mod(Math.abs(System.Crypto.getRandomInteger()),
                               					maxTasksWithTypeCount)) + 1;
             for ( Integer i = 0; i < actualTasksWithTypeCount; i++){
-                results.add(new Task(RecordTypeId = rt));
+                results.add(new Task(RecordTypeId = rt, Status = 'Open'));
             }
         }        
         return results;
