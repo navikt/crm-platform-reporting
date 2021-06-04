@@ -18,9 +18,6 @@ public class TaskRecordTypeIdUpdateQuery implements Database.Batchable<sObject>{
     public void execute(Database.BatchableContext bc, List<Task> tasks){
         for(Task t : tasks){
             t.RecordTypeId = newRecordTypeId;
-            if(String.isNotEmpty(t.Description) && t.TAG_NoPersonInformation__c == false){
-                t.TAG_NoPersonInformation__c = true;
-            }
         }
         update tasks;
     }   
