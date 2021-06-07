@@ -7,9 +7,9 @@ public class TaskRecordTypeIdUpdateQuery implements Database.Batchable<sObject>{
         newRecordTypeId = [SELECT Id, Name FROM RecordType WHERE Name='AG Oppgave' LIMIT 1].Id;
         if(Test.isRunningTest()){
             ID htaskId = [SELECT Id FROM RecordType WHERE Name='HOT Task' LIMIT 1].Id;
-            query = 'SELECT Id FROM Task WHERE RecordTypeId = \'' + htaskId + '\'';
+            query = 'SELECT Id, Description, TAG_NoPersonInformation__c FROM Task WHERE RecordTypeId = \'' + htaskId + '\'';
         } else {
-            query = 'SELECT Id FROM Task WHERE RecordTypeId = NULL';
+            query = 'SELECT Id, Description, TAG_NoPersonInformation__c FROM Task WHERE RecordTypeId = NULL';
         } 
     }
     public Database.QueryLocator start(Database.BatchableContext bc){
