@@ -45,4 +45,7 @@ force-app/main/default/translations/
 run.command
 run.cmd
 install.cmd
-force-app/main/default/lwc/jsconfig.json
+
+# LWC configuration files
+**/jsconfig.json
+**/.eslintrc.json
