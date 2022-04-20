@@ -1,6 +1,6 @@
 global without sharing class UserAdoptionBatch implements Schedulable, Database.Batchable<AggregateResult> {
-    private Boolean isNewUsers {get; set;}
-    private final Integer BATCH_LIMIT = 1000;
+    private Boolean isNewUsers {get; set;} // Flag for batch type, set automatically.
+    private final Integer BATCH_LIMIT = 1000; // Ensure the batch limit is reasonable to avoid limit exhaustion (!)
     private final Map<Id, String> profileNameById = getProfilesById();
     private final DateTime periodDate = DateTime.now().addDays(-7);
     private final DateTime reportDate = periodDate.addDays(6);
@@ -10,20 +10,31 @@ global without sharing class UserAdoptionBatch implements Schedulable, Database.
     global UserAdoptionBatch(Boolean isNewUsers){
         this.isNewUsers = isNewUsers;
     }
+
+    // Necessary for the class to be schedulable as well as batchable
+    global UserAdoptionBatch(){        
+    }
     
     global void execute(SchedulableContext sc) {
-        // Ensure the batch limit is reasonable to avoid limit exhaustion (!)
         UserAdoptionBatch btch = new UserAdoptionBatch(false);
         Database.executeBatch(btch, BATCH_LIMIT);
     }
 
     global Iterable<AggregateResult> start(Database.BatchableContext BC) {       
         String query = '';
-        // Query depends on the isNewUsers flag which should not be set manually.
-        if(!isNewUsers){
-            query = 'SELECT CompanyName, Min(Region__c) Region, COUNT(ID) Logins FROM User WHERE LastLoginDate >= ' + String.valueOf(periodDate).replace(' ','T') + 'Z GROUP BY CompanyName';
+        // Query and thus batch type depends on the isNewUsers flag.
+        if(!isNewUsers){            
+            if(Test.isRunningTest()){
+                query = 'SELECT CompanyName, Min(Region__c) Region, COUNT(ID) Logins FROM User WHERE Username LIKE \'%@nav.apextest%\' GROUP BY CompanyName';
+            }else{
+                query = 'SELECT CompanyName, Min(Region__c) Region, COUNT(ID) Logins FROM User WHERE LastLoginDate >= ' + String.valueOf(periodDate).replace(' ','T') + 'Z GROUP BY CompanyName';
+            }
         } else {
-            query = 'SELECT CompanyName, Min(Region__c) Region, ProfileId, COUNT(ID) Users FROM User WHERE CreatedDate >= ' + String.valueOf(startDate).replace(' ','T') + 'Z AND CreatedDate <= ' + String.valueOf(endDate).replace(' ','T') + 'Z GROUP BY CompanyName, ProfileId';
+            if(Test.isRunningTest()){
+                query = 'SELECT CompanyName, Min(Region__c) Region, ProfileId, COUNT(ID) Users FROM User WHERE CreatedDate >= ' + String.valueOf(startDate.addDays(1)).replace(' ','T') + 'Z AND CreatedDate <= ' + String.valueOf(endDate.addDays(1)).replace(' ','T') + 'Z GROUP BY CompanyName, ProfileId';
+            }else{
+                query = 'SELECT CompanyName, Min(Region__c) Region, ProfileId, COUNT(ID) Users FROM User WHERE CreatedDate >= ' + String.valueOf(startDate).replace(' ','T') + 'Z AND CreatedDate <= ' + String.valueOf(endDate).replace(' ','T') + 'Z GROUP BY CompanyName, ProfileId';
+            }
         }
         return new AggregateResultIterable(query);       
     }
@@ -53,8 +64,10 @@ global without sharing class UserAdoptionBatch implements Schedulable, Database.
     }
     global void finish(Database.BatchableContext BC) {
         //Start processing the newly created users by starting a new batch and setting the isNewUsers flag
-        UserAdoptionBatch btchFinal = new UserAdoptionBatch(true);
-        Database.executeBatch(btchFinal, BATCH_LIMIT);
+        if(!isNewUsers){
+            UserAdoptionBatch btchFinal = new UserAdoptionBatch(true);
+            Database.executeBatch(btchFinal, BATCH_LIMIT);
+        }        
     }
 
     private static Map<Id, String> getProfilesById() {

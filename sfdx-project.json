@@ -8,14 +8,14 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.93.0.LATEST"
+                    "versionNumber": "0.151.0.LATEST"
                 }
             ]
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "47.0",
+    "sourceApiVersion": "54.0",
     "packageAliases": {
         "crm-platform-reporting": "0Ho2o0000008OSfCAM",
         "crm-platform-base": "0Ho2o0000008ORmCAM"
