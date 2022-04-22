@@ -6,6 +6,7 @@ global without sharing class UserAdoptionBatch implements Schedulable, Database.
     private final DateTime reportDate = periodDate.addDays(6);
     private final DateTime startDate = DateTime.newInstance(reportDate.year(), reportDate.month(), reportDate.day(), 0, 0, 0);
     private final DateTime endDate = DateTime.newInstance(reportDate.year(), reportDate.month(), reportDate.day(), 23, 59, 59);
+    private LoggerUtility logger = new LoggerUtility();
     
     global UserAdoptionBatch(Boolean isNewUsers){
         this.isNewUsers = isNewUsers;
@@ -39,11 +40,10 @@ global without sharing class UserAdoptionBatch implements Schedulable, Database.
         return new AggregateResultIterable(query);       
     }
 
-    global void execute(Database.BatchableContext BC, List<sObject> scope) {
+    global void execute(Database.BatchableContext BC, List<AggregateResult> scope) {
         List<ReportingData__c> reportingData = new List<ReportingData__c>();
         Date rD = Date.newInstance(reportDate.year(), reportDate.month(), reportDate.day());
-        for(sObject sObj : scope){
-            AggregateResult ar = (AggregateResult)sObj;
+        for(AggregateResult ar : scope){
             ReportingData__c r = new ReportingData__c(
                 CRM_Region__c = (String) ar.get('Region'),                
                 CRM_Date__c = rD,
@@ -60,14 +60,24 @@ global without sharing class UserAdoptionBatch implements Schedulable, Database.
             }
             reportingData.add(r);            
         }
-        insert reportingData;
+        
+        try {
+            insert reportingData;
+        } catch (Exception e) {
+            logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
+        }        
     }
     global void finish(Database.BatchableContext BC) {
         //Start processing the newly created users by starting a new batch and setting the isNewUsers flag
         if(!isNewUsers){
-            UserAdoptionBatch btchFinal = new UserAdoptionBatch(true);
-            Database.executeBatch(btchFinal, BATCH_LIMIT);
-        }        
+            try{
+                UserAdoptionBatch btchFinal = new UserAdoptionBatch(true);
+                Database.executeBatch(btchFinal, BATCH_LIMIT);
+            } catch (Exception e) {
+                logger.exception(e, CRM_ApplicationDomain.Domain.CRM);
+            }
+        }
+        if(logger.peek() != null) logger.publish();        
     }
 
     private static Map<Id, String> getProfilesById() {
