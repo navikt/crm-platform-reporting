@@ -6,6 +6,7 @@
         "Sites",
         "ForceComPlatform",
         "Communities",
+        "Knowledge",
         "CustomerCommunity",
         "CustomerCommunityLogin",
         "CustomerCommunityPlus",
@@ -38,6 +39,10 @@
         "accountSettings": {
             "enableAccountHistoryTracking": true,
             "enableAccountTeams": true
+        },
+        "knowledgeSettings": {
+            "enableKnowledge": true,
+            "enableLightningKnowledge": true
         },
         "fieldServiceSettings": {
             "fieldServiceOrgPref": true,
