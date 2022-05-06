@@ -28,13 +28,13 @@ global without sharing class UserAdoptionBatch implements Schedulable, Database.
             if(Test.isRunningTest()){
                 query = 'SELECT CompanyName, Min(Region__c) Region, COUNT(ID) Logins FROM User WHERE Username LIKE \'%@nav.apextest%\' GROUP BY CompanyName';
             }else{
-                query = 'SELECT CompanyName, Min(Region__c) Region, COUNT(ID) Logins FROM User WHERE LastLoginDate >= ' + String.valueOf(periodDate).replace(' ','T') + 'Z GROUP BY CompanyName';
+                query = 'SELECT CompanyName, Min(Region__c) Region, COUNT(ID) Logins FROM User WHERE LastLoginDate >= ' + String.valueOf(periodDate).replace(' ','T') + 'Z AND CompanyName != null GROUP BY CompanyName';
             }
         } else {
             if(Test.isRunningTest()){
                 query = 'SELECT CompanyName, Min(Region__c) Region, ProfileId, COUNT(ID) Users FROM User WHERE CreatedDate >= ' + String.valueOf(startDate.addDays(1)).replace(' ','T') + 'Z AND CreatedDate <= ' + String.valueOf(endDate.addDays(1)).replace(' ','T') + 'Z GROUP BY CompanyName, ProfileId';
             }else{
-                query = 'SELECT CompanyName, Min(Region__c) Region, ProfileId, COUNT(ID) Users FROM User WHERE CreatedDate >= ' + String.valueOf(startDate).replace(' ','T') + 'Z AND CreatedDate <= ' + String.valueOf(endDate).replace(' ','T') + 'Z GROUP BY CompanyName, ProfileId';
+                query = 'SELECT CompanyName, Min(Region__c) Region, ProfileId, COUNT(ID) Users FROM User WHERE CreatedDate >= ' + String.valueOf(startDate).replace(' ','T') + 'Z AND CreatedDate <= ' + String.valueOf(endDate).replace(' ','T') + 'Z AND CompanyName != null GROUP BY CompanyName, ProfileId';
             }
         }
         return new AggregateResultIterable(query);       
