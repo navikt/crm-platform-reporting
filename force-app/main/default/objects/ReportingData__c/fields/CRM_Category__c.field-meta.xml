@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CRM_Category__c</fullName>
     <description>Reporting Category</description>
@@ -25,6 +25,11 @@
                 <fullName>Service Appointment</fullName>
                 <default>false</default>
                 <label>Service Appointment</label>
+            </value>
+            <value>
+                <fullName>DIA User Adoption</fullName>
+                <default>false</default>
+                <label>DIA User Adoption</label>
             </value>
         </valueSetDefinition>
     </valueSet>
