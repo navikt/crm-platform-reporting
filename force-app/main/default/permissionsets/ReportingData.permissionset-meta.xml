@@ -27,6 +27,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ReportingData__c.CRM_Category_Index__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ReportingData__c.CRM_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
