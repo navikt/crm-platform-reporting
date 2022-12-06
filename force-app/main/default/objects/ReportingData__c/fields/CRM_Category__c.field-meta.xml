@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>STO</label>
             </value>
+            <value>
+                <fullName>Video View</fullName>
+                <default>false</default>
+                <label>Video View</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
