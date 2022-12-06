@@ -4,7 +4,7 @@ private class UserAdoptionBatchTest {
         get {
             Datetime start = Datetime.now().addMinutes(10);
             String hour = String.valueOf(start.hour());
-            String min = String.valueOf(start..minute());
+            String min = String.valueOf(start.minute());
             String ss = String.valueOf(start.second());
 
             //parse to cron expression
