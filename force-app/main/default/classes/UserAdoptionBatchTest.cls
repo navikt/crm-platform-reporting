@@ -3,9 +3,9 @@ private class UserAdoptionBatchTest {
     private static String CRON_EXP {
         get {
             Datetime start = Datetime.now().addMinutes(10);
-            String hour = String.valueOf(Datetime.now().hour());
-            String min = String.valueOf(Datetime.now()..minute());
-            String ss = String.valueOf(Datetime.now().second());
+            String hour = String.valueOf(start.hour());
+            String min = String.valueOf(start..minute());
+            String ss = String.valueOf(start.second());
 
             //parse to cron expression
             return ss + ' ' + min + ' ' + hour + ' * * ?';
