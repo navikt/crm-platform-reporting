@@ -46,6 +46,11 @@
                 <default>false</default>
                 <label>Chat</label>
             </value>
+            <value>
+                <fullName>BTO Transfer</fullName>
+                <default>false</default>
+                <label>BTO Transfer</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
