@@ -51,6 +51,16 @@
                 <default>false</default>
                 <label>BTO Transfer</label>
             </value>
+            <value>
+                <fullName>BTO</fullName>
+                <default>false</default>
+                <label>BTO</label>
+            </value>
+            <value>
+                <fullName>STO Transfer</fullName>
+                <default>false</default>
+                <label>STO Transfer</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
