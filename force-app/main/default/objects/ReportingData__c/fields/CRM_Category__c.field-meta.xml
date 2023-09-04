@@ -61,6 +61,11 @@
                 <default>false</default>
                 <label>STO Transfer</label>
             </value>
+            <value>
+                <fullName>TAG External Notification</fullName>
+                <default>false</default>
+                <label>TAG External Notification</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
