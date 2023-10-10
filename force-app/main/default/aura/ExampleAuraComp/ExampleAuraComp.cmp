@@ -1,0 +1,8 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <c:amplitude aura:id="amplitude"></c:amplitude>
+    <lightning:card>
+
+        <p>This is an aura comp, can it send an event?</p>
+        <lightning:button variant="base" label="Send Aura event" title="Sedn event?" onclick="{! c.handleClick }"/>
+    </lightning:card>
+</aura:component>	
