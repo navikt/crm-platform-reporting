@@ -4,4 +4,3 @@ export const trackAmplitudeEvent = (eventName, options = null) => {
         amplitude.track(eventName, options);
     }
 }
-

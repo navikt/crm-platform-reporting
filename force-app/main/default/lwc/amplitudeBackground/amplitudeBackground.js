@@ -4,10 +4,9 @@ import AmplitudeScript from '@salesforce/resourceUrl/Amplitude';
 import getAmplitudeKey from '@salesforce/apex/AmplitudeHelper.getAmplitudeKey';
 
 export default class AmplitudeBackground extends LightningElement {
+
     connectedCallback() {
-        console.log('Fist of the north star')
-        getAmplitudeKey().then(value => {
-            console.log(value);
+        if(!window.amplitude) getAmplitudeKey().then(value => {
             loadScript(this, AmplitudeScript + '/Amplitude.js').then(() => {
                 window.amplitude.init(value, '', {
                     apiEndpoint: 'amplitude.nav.no/collect',
