@@ -14,7 +14,10 @@ export default class AmplitudeBackground extends LightningElement {
                     saveEvents: false,
                     includeUtm: true,
                     batchEvents: false,
-                    includeReferrer: true
+                    includeReferrer: true,
+                    defaultTracking: {
+                        pageViews: false,
+                      },
                 });
             });
         })
