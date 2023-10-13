@@ -18,5 +18,12 @@
             }
         });
         $A.enqueueAction(action);
+    },
+
+    onTabClosed : function(component, event, helper) {
+        component.find('amplitude').trackAmplitudeEvent('Closed tab');
+    },
+    onTabCreated : function(component, event, helper) {
+        component.find('amplitude').trackAmplitudeEvent('Tab created');
     }
 })

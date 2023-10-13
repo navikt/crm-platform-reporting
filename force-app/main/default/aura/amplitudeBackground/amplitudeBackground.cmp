@@ -2,4 +2,7 @@
     <c:amplitude aura:id="amplitude" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <ltng:require scripts="{!$Resource.Amplitude + '/Amplitude.js'}" />
+
+    <aura:handler event="lightning:tabClosed" action="{!c.onTabClosed}" />
+    <aura:handler event="lightning:tabCreated" action="{! c.onTabCreated }"/> 
 </aura:component>	
