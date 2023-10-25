@@ -32,7 +32,7 @@
             tabId: focusedTabId
         }).then(function (response) {
             
-            console.log('onTabFocused');
+            console.log('The Information:');
             console.log(response);
             console.log(response.recordId);
             console.log(response.isSubtab);
