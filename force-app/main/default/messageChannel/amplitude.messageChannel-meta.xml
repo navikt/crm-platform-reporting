@@ -2,5 +2,6 @@
 <LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel>Amplitude tracking</masterLabel>
     <isExposed>true</isExposed>
-    <description>This is a sample Lightning Message Channel.</description>
+    <description>Message channel for tracking events to be logged to Amplitude. Messages are sent to
+        amplitudeBackground aura component.</description>
 </LightningMessageChannel>
