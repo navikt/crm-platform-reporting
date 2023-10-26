@@ -3,7 +3,6 @@
     <c:amplitude aura:id="amplitude" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <ltng:require scripts="{!$Resource.Amplitude + '/Amplitude.js'}" />
-
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:handler event="lightning:tabFocused" action="{! c.onTabFocused }"/> 
     <lightning:messageChannel type="amplitude__c"

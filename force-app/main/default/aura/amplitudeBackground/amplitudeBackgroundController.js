@@ -19,8 +19,8 @@
             }
         });
         $A.enqueueAction(action);
+        component.find('amplitude').logClickEvents();
     },
-
     onTabFocused: function(component, event, helper) {
         console.log('onTabFocused controller');
         helper.handleTabFocused(component, event, helper);
