@@ -28,15 +28,12 @@
     
                 case 'standard__recordRelationshipPage': 
                     //  Related list
-                    // TODO: Check if spread operator works here - looks like it's not supported
-                    outputLog = { isSubtab: response.isSubtab, type: 'Related List', /*...response.pageReference.attributes*/ }
+                    outputLog = { isSubtab: response.isSubtab, type: 'Related List' };
+                    outputLog = Object.assign(outputLog, response.pageReference.attributes); // Spread operator is not supported so Object.assign does the job.
                     break;
     
                 case 'standard__navItemPage':
-                    // TODO: Test Meldekort / Oppfølging (Lightning Tab)
-                    // response.pageReference.state.ws inneholder URL til parent tab (? teste det), så vi kan splitte for å få ID.
-                    // TODO: Check if split is correct
-                    console.log(response.pageReference.state.ws.split('/')[4]);
+                    // A page that displays the content mapped to a custom tab. Visualforce tabs, web tabs, Lightning Pages, and Lightning Component tabs are supported.
                     outputLog = { isSubtab: response.isSubtab, recordId: response.pageReference.state.ws.split('/')[4], apiName: response.pageReference.attributes.apiName, type: 'Lightning Tab'}
                     break;
     
