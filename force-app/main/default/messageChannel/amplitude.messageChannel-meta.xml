@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Amplitude tracking</masterLabel>
+    <isExposed>true</isExposed>
+    <description>Message channel for tracking events to be logged to Amplitude. Messages are sent to
+        amplitudeBackground aura component.</description>
+</LightningMessageChannel>
