@@ -1,0 +1,15 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="AmplitudeHelper">
+    <ltng:require scripts="{!$Resource.Amplitude + '/Amplitude.js'}" afterScriptsLoaded="{!c.reloadAmplitude}" />
+    <c:loggerUtility aura:id="loggerUtility"></c:loggerUtility>
+    <c:amplitude aura:id="amplitude" />
+
+    <aura:attribute name="recordIdMap" type="Object" />
+    <aura:attribute name="recordId" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler event="lightning:tabFocused" action="{! c.onTabFocused }" />
+
+    <lightning:messageChannel type="amplitude__c" onMessage="{!c.onLogMessage}" scope="APPLICATION" />
+</aura:component>
