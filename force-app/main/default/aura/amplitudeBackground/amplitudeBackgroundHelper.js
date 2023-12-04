@@ -98,10 +98,8 @@
     },
 
     sendToAmplitude: function (component, helper, eventType, tabId, objectToLog) {
-        if (!helper.getTabMapValue(component, tabId) && tabId != null) { // Tab not in map
-            objectToLog.record = helper.anonymizeRecordId(component, objectToLog.record);
-            helper.setTabMapValue(component, tabId, objectToLog);
-        }
+        objectToLog.record = helper.anonymizeRecordId(component, objectToLog.record);
+        helper.setTabMapValue(component, helper, tabId, objectToLog);
         console.log('tabId: ', tabId);
         console.log('eventType: ', eventType);
         console.log('tabMap: ', component.get('v.tabMap'));
@@ -121,13 +119,19 @@
         return recordIdMap.get(recordId);
     },
 
-    setTabMapValue: function (component, tabId, objectToLog) {
+    setTabMapValue: function (component, helper, tabId, objectToLog) {
+        if (helper.getTabMapValue(component, tabId) || tabId == null) { // Exists in map or no tabId
+            return;
+        }
         const tabMap = component.get('v.tabMap');
         tabMap.set(tabId, objectToLog);
         component.set('v.tabMap', tabMap);
     },
 
     getTabMapValue: function (component, tabId) {
+        if (tabId == null) {
+            return false;
+        }
         const tabMap = component.get('v.tabMap');
         if (tabMap.get(tabId) == null) {
             return false; // tabId not in tabMap
