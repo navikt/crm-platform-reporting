@@ -98,7 +98,7 @@
     },
 
     sendToAmplitude: function (component, helper, eventType, tabId, objectToLog) {
-        if (component.get('v.tabMap').get(tabId) == null && tabId != null) {
+        if (!helper.getTabMapValue(component, tabId) && tabId != null) { // Tab not in map
             objectToLog.record = helper.anonymizeRecordId(component, objectToLog.record);
             helper.setTabMapValue(component, tabId, objectToLog);
         }
