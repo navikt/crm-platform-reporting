@@ -1,16 +1,26 @@
 ({
-    handleTabFocused: function (component, event, helper) {
-        let focusedTabId = event.getParam('currentTabId');
-        if (focusedTabId == null) {
+    handleTabEvent: function (component, event, helper, tabActionType) {
+        const currentTabId = event.getParam('currentTabId'); // On focus
+        const tabId = event.getParam ('tabId'); // On close / create
+        const activeTabId = tabId == null ? currentTabId : tabId;
+        if (activeTabId == null) {
             return;
         }
         let recordId;
-        let objectToLog;
+        let objectToLog = {};
         component.set('v.recordId', null); // Reset
+        // If tab info already exists in map or tab is closed -> do not invoke WorkSpace API
+        if (helper.getTabMapValue(component, activeTabId) || tabActionType === 'Tab closed') {
+            helper.sendToAmplitude(component, helper, tabActionType, activeTabId, component.get('v.tabMap').get(activeTabId));
+            if (tabActionType === 'Tab closed') {
+                helper.deleteTabMapValue(component, activeTabId);
+            }
+            return;
+        }
         let workspaceAPI = component.find('workspace');
         workspaceAPI
             .getTabInfo({
-                tabId: focusedTabId
+                tabId: activeTabId
             })
             .then(function (response) {
                 switch (response.pageReference.type) {
@@ -59,7 +69,6 @@
                         objectToLog = {
                             isSubtab: response.isSubtab,
                             tabType: 'Global Search',
-                            searchTerm: response.pageReference.attributes.attributes.term,
                             appName: response.pageReference.attributes.attributes.context.debugInfo.appName,
                             scope: response.pageReference.attributes.attributes.scopeMap.label
                         };
@@ -74,7 +83,7 @@
                         };
                 }
                 component.set('v.recordId', recordId); // Set current recordId in case it is not sent in logMessage to have fallback
-                helper.sendToAmplitude(component, helper, 'Tab focused', objectToLog);
+                helper.sendToAmplitude(component, helper, tabActionType, activeTabId, objectToLog);
             });
     },
 
@@ -85,24 +94,51 @@
             message.getParam('recordId') === null || message.getParam('recordId') === undefined
                 ? component.get('v.recordId')
                 : message.getParam('recordId');
-        helper.sendToAmplitude(component, helper, eventType, objectToLog);
+        helper.sendToAmplitude(component, helper, eventType, null, objectToLog);
     },
 
-    sendToAmplitude: function (component, helper, eventType, objectToLog) {
-        objectToLog.record = helper.anonymizeRecordId(component, objectToLog.record);
+    sendToAmplitude: function (component, helper, eventType, tabId, objectToLog) {
+        if (component.get('v.tabMap').get(tabId) == null && tabId != null) {
+            objectToLog.record = helper.anonymizeRecordId(component, objectToLog.record);
+            helper.setTabMapValue(component, tabId, objectToLog);
+        }
+        console.log('tabId: ', tabId);
+        console.log('eventType: ', eventType);
+        console.log('tabMap: ', component.get('v.tabMap'));
+        console.log('tabMap value: ', JSON.stringify(component.get('v.tabMap').get(tabId)));
         component.find('amplitude').trackAmplitudeEvent(eventType, objectToLog);
     },
 
     anonymizeRecordId: function (component, recordId) {
-        if (recordId === undefined || recordId === null || recordId === '') {
+        if (recordId == null || recordId === '') {
             return '';
         }
         const recordIdMap = component.get('v.recordIdMap'); // Accessing the map from the component attribute
-        if (recordIdMap.get(recordId) === undefined) {
+        if (recordIdMap.get(recordId) == undefined) {
             recordIdMap.set(recordId, crypto.randomUUID());
             component.set('v.recordIdMap', recordIdMap);
         }
         return recordIdMap.get(recordId);
+    },
+
+    setTabMapValue: function (component, tabId, objectToLog) {
+        const tabMap = component.get('v.tabMap');
+        tabMap.set(tabId, objectToLog);
+        component.set('v.tabMap', tabMap);
+    },
+
+    getTabMapValue: function (component, tabId) {
+        const tabMap = component.get('v.tabMap');
+        if (tabMap.get(tabId) == null) {
+            return false; // tabId not in tabMap
+        }
+        return true;
+    },
+
+    deleteTabMapValue: function (component, tabId) {
+        const tabMap = component.get('v.tabMap');
+        tabMap.delete(tabId);
+        component.set('v.tabMap', tabMap);
     },
 
     loadAmplitude: function (component) {
