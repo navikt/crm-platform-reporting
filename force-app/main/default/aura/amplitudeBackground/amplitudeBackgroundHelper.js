@@ -59,7 +59,6 @@
                         objectToLog = {
                             isSubtab: response.isSubtab,
                             tabType: 'Global Search',
-                            searchTerm: response.pageReference.attributes.attributes.term,
                             appName: response.pageReference.attributes.attributes.context.debugInfo.appName,
                             scope: response.pageReference.attributes.attributes.scopeMap.label
                         };
