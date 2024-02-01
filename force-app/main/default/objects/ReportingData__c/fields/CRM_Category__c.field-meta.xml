@@ -66,6 +66,11 @@
                 <default>false</default>
                 <label>TAG External Notification</label>
             </value>
+            <value>
+                <fullName>Chat Threat</fullName>
+                <default>false</default>
+                <label>Chat Threat</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
