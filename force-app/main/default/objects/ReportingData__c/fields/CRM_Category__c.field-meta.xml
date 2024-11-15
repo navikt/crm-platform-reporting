@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CRM_Category__c</fullName>
+    <deprecated>false</deprecated>
     <description>Reporting Category</description>
     <externalId>false</externalId>
     <label>Category</label>
@@ -70,6 +71,17 @@
                 <fullName>Chat Threat</fullName>
                 <default>false</default>
                 <label>Chat Threat</label>
+            </value>
+            <value>
+                <fullName>Kommunal hurtigtekst</fullName>
+                <default>false</default>
+                <label>Kommunal hurtigtekst</label>
+            </value>
+            <value>
+                <fullName>Lonnskompensasjon</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Lonnskompensasjon</label>
             </value>
         </valueSetDefinition>
     </valueSet>
