@@ -77,12 +77,6 @@
                 <default>false</default>
                 <label>Kommunal hurtigtekst</label>
             </value>
-            <value>
-                <fullName>Lonnskompensasjon</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Lonnskompensasjon</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
