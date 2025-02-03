@@ -64,7 +64,7 @@ export async function validateAmplitudeFunction(retries = 5) {
     return validateAmplitudeFunction(retries - 1);
 }
 
-export function logNavigationEvent(component, section, destination, linkText) {
+export function logNavigationEvent(contentType, component, section, destination, linkText) {
     logAmplitudeEvent(AnalyticsEvents.NAVIGATION, {
         komponent: component,
         lenkegruppe: 'innboks lenker',
@@ -72,36 +72,35 @@ export function logNavigationEvent(component, section, destination, linkText) {
         destinasjon: destination,
         lenketekst: linkText,
         målgruppe: 'privatperson',
-        innholdstype: 'innboks'
+        innholdstype: contentType
     });
 }
 
-export function logAccordionEvent(isOpen, title, pageType, component) {
+export function logAccordionEvent(isOpen, title, contentType, component) {
     logAmplitudeEvent(isOpen ? AnalyticsEvents.ACC_EXPAND : AnalyticsEvents.ACC_COLLAPSE, {
         tittel: title,
-        opprinnelse: pageType,
         komponent: component,
         målgruppe: 'privatperson',
-        innholdstype: 'innboks'
+        innholdstype: contentType
     });
 }
 
-export function logModalEvent(isOpen, title, component, section) {
+export function logModalEvent(isOpen, title, contentType, component, section) {
     logAmplitudeEvent(isOpen ? AnalyticsEvents.MODAL_OPEN : AnalyticsEvents.MODAL_CLOSE, {
         tittel: title,
         komponent: component,
         seksjon: section,
         målgruppe: 'privatperson',
-        innholdstype: 'innboks'
+        innholdstype: contentType
     });
 }
 
-export function logButtonEvent(eventType, label, component, section) {
+export function logButtonEvent(eventType, label, contentType, component, section) {
     logAmplitudeEvent(eventType, {
         komponent: component,
         seksjon: section,
         label: label,
         målgruppe: 'privatperson',
-        innholdstype: 'innboks'
+        innholdstype: contentType
     });
 }
