@@ -37,33 +37,6 @@ export function logAmplitudeEvent(eventName, eventData) {
     }
 }
 
-export function changeParameter(key, value) {
-    const message = {
-        source: 'decoratorClient',
-        event: 'params',
-        payload: { [key]: value }
-    };
-    window.postMessage(message, window.location.origin);
-}
-
-const waitForRetry = async () =>
-    // eslint-disable-next-line @lwc/lwc/no-async-operation, @locker/locker/distorted-window-set-timeout
-    new Promise((resolve) => setTimeout(resolve, 500));
-
-export async function validateAmplitudeFunction(retries = 5) {
-    if (typeof window.dekoratorenAmplitude === 'function') {
-        return Promise.resolve(true);
-    }
-
-    if (retries === 0) {
-        return Promise.resolve(false);
-    }
-
-    await waitForRetry();
-
-    return validateAmplitudeFunction(retries - 1);
-}
-
 export function logNavigationEvent(contentType, component, section, destination, linkText) {
     logAmplitudeEvent(AnalyticsEvents.NAVIGATION, {
         komponent: component,
@@ -95,12 +68,13 @@ export function logModalEvent(isOpen, title, contentType, component, section) {
     });
 }
 
-export function logButtonEvent(eventType, label, contentType, component, section) {
+export function logButtonEvent(eventType, label, contentType, component, section, messageType = null) {
     logAmplitudeEvent(eventType, {
         komponent: component,
         seksjon: section,
         label: label,
         målgruppe: 'privatperson',
-        innholdstype: contentType
+        innholdstype: contentType,
+        meldingstype: messageType
     });
 }
