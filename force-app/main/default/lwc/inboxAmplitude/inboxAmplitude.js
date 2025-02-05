@@ -57,3 +57,7 @@ export function logButtonEvent(eventType, label, contentType, component, section
         meldingstype: messageType
     });
 }
+
+export function getComponentName(className) {
+    return className?.constructor.name;
+}
