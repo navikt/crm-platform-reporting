@@ -13,7 +13,7 @@ export function logAmplitudeEvent(eventName, eventData) {
     const origin = 'crm-innboks';
     const analytics = window.dekoratorenAmplitude;
     if (analytics) {
-        analytics({ eventName, origin, eventData });
+        analytics({ eventName, origin, eventData: eventData || {} });
     }
 }
 
@@ -56,14 +56,15 @@ export function logButtonEvent(eventType, label, component, section, messageType
 }
 
 /**
- * @param {*} category text for filter which is used
- * @param {*} filterName text for alternative filter which is used
- * @param {*} component
- * @param {*} section
+ * Logs a filter selection event.
+ * @param {string} category - The category of the selected filter.
+ * @param {string} filterName - The name of the selected filter option.
+ * @param {string} component
+ * @param {string} section
  */
 export function logFilterEvent(category, filterName, component, section) {
     logAmplitudeEvent(AnalyticsEvents.FILTER, {
-        kategory: category,
+        kategori: category,
         filternavn: filterName,
         komponent: component,
         seksjon: section,
@@ -72,22 +73,24 @@ export function logFilterEvent(category, filterName, component, section) {
 }
 
 /**
- * Function to send pageType and pageTheme
- * @param {string} pageType pageType is a "Skriv til oss" or "Beskjed til oss"
- * @param {string} pageTheme pageTheme is category for STO or BTO
+ * Sends page type and page theme parameters.
+ * @param {string} pageType - The type of page, e.g., "Skriv til oss" or "Beskjed til oss".
+ * @param {string} pageTheme - The category for the STO or BTO, e.g. "Familie og barn"
  */
 export function setDecoratorParams(pageType, pageTheme) {
     window.postMessage({
         source: 'nksInnboks',
         event: 'params',
-        payload: { pageType: pageType, pageTheme: pageTheme }
+        payload: { pageType, pageTheme }
     });
 }
 
 /**
- * Function to send a list of breadcrumbs
- * @param {list} breadcrumbs breadcrumb should be sendt in form of a object as {url: "/test", title: "Test"}
+ * Sends a list of breadcrumbs.
+ * @param {Array<Object>} breadcrumbs - An array of breadcrumb objects, each with the format: { url: "/test", title: "Test" }.
  */
 export function updateBreadcrumbs(breadcrumbs) {
-    window.postMessage({ source: 'decoratorClient', event: 'params', payload: { breadcrumbs } });
+    if (Array.isArray(breadcrumbs) && breadcrumbs.every((b) => b.url && b.title)) {
+        window.postMessage({ source: 'decoratorClient', event: 'params', payload: { breadcrumbs } });
+    }
 }
