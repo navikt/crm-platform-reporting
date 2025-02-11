@@ -94,3 +94,16 @@ export function updateBreadcrumbs(breadcrumbs) {
         window.postMessage({ source: 'decoratorClient', event: 'params', payload: { breadcrumbs } });
     }
 }
+
+/**
+ * Converts a component's `localName` (e.g., "c-test-component") into camelCase.
+ * @param {string} localName - The local name of the component, typically in the form of
+ *                             "namespace-component-name" (e.g., "c-test-component").
+ * @returns {string} The component name in camelCase format (e.g., "testComponent").
+ */
+export function getComponentName(localName) {
+    return localName
+        .split('-')
+        .slice(1)
+        .reduce((a, b) => a + b.charAt(0).toUpperCase() + b.slice(1));
+}
