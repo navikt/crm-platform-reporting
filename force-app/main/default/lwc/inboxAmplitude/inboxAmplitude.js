@@ -96,13 +96,14 @@ export function updateBreadcrumbs(breadcrumbs) {
 }
 
 /**
- * Converts a component's `localName` (e.g., "c-test-component") into camelCase.
- * @param {string} localName - The local name of the component, typically in the form of
- *                             "namespace-component-name" (e.g., "c-test-component").
+ * Extracts a component's name from its `localName` and converts it to camelCase format.
+ *
+ * @param {Element} template - The component's template element, typically `this.template` in LWC,
+ *                             which includes the `host` property containing `localName`.
  * @returns {string} The component name in camelCase format (e.g., "testComponent").
  */
-export function getComponentName(localName) {
-    return localName
+export function getComponentName(template) {
+    return template.host.localName
         .split('-')
         .slice(1)
         .reduce((a, b) => a + b.charAt(0).toUpperCase() + b.slice(1));
