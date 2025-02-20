@@ -74,14 +74,15 @@ export function logFilterEvent(category, filterName, component, section) {
 
 /**
  * Sends page type and page theme parameters.
- * @param {string} pageType - The type of page, e.g., "Skriv til oss" or "Beskjed til oss".
- * @param {string} pageTheme - The category for the STO or BTO, e.g. "Familie og barn"
+ * @param {string} pageType - The type of page, "Skriv til oss" or "Beskjed til oss"
+ * @param {string} pageTitle - The title of page, e.g., "Meld fra om endring" or "Skriv til oss"
+ * @param {string} pageTheme - The theme for the STO or BTO, e.g. "Familie og barn"
  */
-export function setDecoratorParams(pageType, pageTheme) {
+export function setDecoratorParams(pageType, pageTitle, pageTheme) {
     window.postMessage({
         source: 'nksInnboks',
         event: 'params',
-        payload: { pageType, pageTheme }
+        payload: { pageType, pageTitle, pageTheme }
     });
 }
 
@@ -91,7 +92,7 @@ export function setDecoratorParams(pageType, pageTheme) {
  */
 export function updateBreadcrumbs(breadcrumbs) {
     if (Array.isArray(breadcrumbs) && breadcrumbs.every((b) => b.url && b.title)) {
-        window.postMessage({ source: 'decoratorClient', event: 'params', payload: { breadcrumbs } });
+        window.postMessage({ source: 'nksInnboks', event: 'params', payload: { breadcrumbs } });
     }
 }
 
