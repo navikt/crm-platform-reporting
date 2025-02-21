@@ -6,7 +6,7 @@ export const trackAmplitudeEvent = (eventName, options = null) => {
     if (amplitude) {
         amplitude.logEvent(eventName, options);
     }
-}
+};
 
 let messageContext = createMessageContext();
 export function publishToAmplitude(eventType, properties, recordId) {
