@@ -4,8 +4,8 @@ export const AnalyticsEvents = {
     ACC_COLLAPSE: 'accordion lukket',
     MODAL_OPEN: 'modal åpnet',
     MODAL_CLOSE: 'modal lukket',
-    FORM_STEP_COMPLETED: 'Skjemassteg fullført',
-    FORM_COMPLETED: 'Skjema fullført',
+    FORM_STEP_COMPLETED: 'skjemassteg fullført',
+    FORM_COMPLETED: 'skjema fullført',
     FILTER: 'filtervalg'
 };
 
