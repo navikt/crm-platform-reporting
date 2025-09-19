@@ -78,6 +78,11 @@
                 <label>Kommunal hurtigtekst</label>
             </value>
             <value>
+                <fullName>TAG Admin</fullName>
+                <default>false</default>
+                <label>TAG Admin</label>
+            </value>
+            <value>
                 <fullName>Besvart med Bob</fullName>
                 <default>false</default>
                 <label>Besvart med Bob</label>
