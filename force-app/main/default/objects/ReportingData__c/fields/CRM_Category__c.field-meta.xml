@@ -77,6 +77,11 @@
                 <default>false</default>
                 <label>Kommunal hurtigtekst</label>
             </value>
+            <value>
+                <fullName>Kommunal hurtigtekst</fullName>
+                <default>false</default>
+                <label>Kommunal hurtigtekst</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
