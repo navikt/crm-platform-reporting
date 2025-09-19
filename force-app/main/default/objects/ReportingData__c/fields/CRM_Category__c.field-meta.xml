@@ -78,9 +78,9 @@
                 <label>Kommunal hurtigtekst</label>
             </value>
             <value>
-                <fullName>Kommunal hurtigtekst</fullName>
+                <fullName>Besvart med Bob</fullName>
                 <default>false</default>
-                <label>Kommunal hurtigtekst</label>
+                <label>Besvart med Bob</label>
             </value>
         </valueSetDefinition>
     </valueSet>
