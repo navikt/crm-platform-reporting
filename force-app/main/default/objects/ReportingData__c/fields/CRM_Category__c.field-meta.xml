@@ -82,6 +82,11 @@
                 <default>false</default>
                 <label>TAG Admin</label>
             </value>
+            <value>
+                <fullName>Besvart med Bob</fullName>
+                <default>false</default>
+                <label>Besvart med Bob</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
